@@ -40,3 +40,5 @@ out/
 *.js
 *.css
 src/main/resources/application.properties
+*.jpg
+*.png

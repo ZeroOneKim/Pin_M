@@ -10,4 +10,9 @@ public class AccountController {
     public String signUpForm(Model model) {
         return "account/signUp";
     }
+
+    @GetMapping("/asd")
+    public String testPage(Model model) {
+        return "/asd";
+    }
 }
