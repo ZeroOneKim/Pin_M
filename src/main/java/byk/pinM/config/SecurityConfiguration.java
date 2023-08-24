@@ -12,11 +12,16 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .mvcMatchers("/", "/login", "/signUp", "/check-mail",
-                        "/login-link", "/asd").permitAll()
+        http.authorizeRequests() //TODO csrf 방어 추가
+                .mvcMatchers("/", "/login", "/signUp", "/check-mail", "/imgs/*",
+                        "/login-link", "/asd")
+                    .permitAll()
                 .mvcMatchers(HttpMethod.GET, "/profile/*").permitAll()
-                .anyRequest().authenticated();
+                    .anyRequest()
+                    .authenticated()
+                    .and()
+                .logout()
+                    .permitAll();
     }
 
     //static 폴더 하위는 모두 접근가능 ex) css/ js ....
@@ -24,4 +29,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
+
+    //TODO 관리자 권한 및 암호화(Bcrypt 외 등등 뭐쓸지 고민.) SHA-256..
 }
