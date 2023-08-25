@@ -13,15 +13,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests() //TODO csrf 방어 추가
-                .mvcMatchers("/", "/login", "/signUp", "/check-mail", "/imgs/*",
-                        "/login-link", "/asd")
+                .mvcMatchers("/", "/signUp", "/signIn", "/check-mail", "/imgs/*","/login-link", "/asd")
                     .permitAll()
                 .mvcMatchers(HttpMethod.GET, "/profile/*").permitAll()
-                    .anyRequest()
-                    .authenticated()
+                    .anyRequest().authenticated()
+                    .and()
+                .formLogin()
+                    .loginPage("/signIn")
                     .and()
                 .logout()
-                    .permitAll();
+                    .permitAll()
+                    .logoutSuccessUrl("/");
     }
 
     //static 폴더 하위는 모두 접근가능 ex) css/ js ....

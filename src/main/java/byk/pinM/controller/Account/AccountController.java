@@ -17,13 +17,20 @@ public class AccountController {
         this.signUpResponseValid = signUpResponseValid;
     }
 
-    @GetMapping("/signUp")
-    public String signUpForm(Model model) {
-        model.addAttribute("signUpResponse", new SignUpResponse());
-        return "account/signUp";
+
+    @GetMapping("/signIn")
+    public String signIn(Model model) {
+        return "account/signIn";
     }
 
-    @PostMapping("signUp")
+
+
+    @GetMapping("/signUp")
+    public String signUpForm(Model model) {
+        model.addAttribute("SignUpResponse", new SignUpResponse());
+        return "account/signUp";
+    }
+    @PostMapping("/signUp_Process")
     public String signUpResponse(@ModelAttribute SignUpResponse signUpResponse, Errors errors) { //Error Code 작성 필요.
         /*SignUpResponseValidMethod(signUpResponseValid);
         signUpResponseValid.validate(signUpResponse, errors);*/
@@ -35,12 +42,12 @@ public class AccountController {
 
         System.out.println("ERROR STATUS(값 체크) : " + errors.hasErrors());
 
-        System.out.println(signUpResponse);
+        System.out.println(signUpResponse.getUser_id());
         System.out.println("Success");
         return "redirect:/";
     }
 
-
+    //테스트용
     @GetMapping("/asd")
     public String testPage(Model model) {
         return "/asd";
