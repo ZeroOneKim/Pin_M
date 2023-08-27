@@ -16,6 +16,7 @@ public class User {
     private String password;
     private String before_pwd;
 
+    @Column(unique = true)
     private String email;
     private boolean email_chk;
     private String email_token;
@@ -29,6 +30,7 @@ public class User {
     private int login_err_cnt;
     private boolean use_lock;
 
+    private Boolean text_agree;
 
     public Long getUser_no() {
         return user_no;
@@ -134,4 +136,7 @@ public class User {
     public void setUse_lock(boolean use_lock) {
         this.use_lock = use_lock;
     }
+
+    public boolean getText_agree() { return text_agree; }
+    public void setText_agree() { this.text_agree = text_agree; }
 }

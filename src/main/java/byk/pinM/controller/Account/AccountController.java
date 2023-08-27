@@ -1,21 +1,24 @@
 package byk.pinM.controller.Account;
 
 import byk.pinM.entity.Account.SignUpResponse;
+import byk.pinM.service.SMTP.SignUpEmailChk;
 import byk.pinM.service.SignUpResponseValid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class AccountController {
 
     private SignUpResponseValid signUpResponseValid;
+    @Autowired
     public void SignUpResponseValidMethod (SignUpResponseValid signUpResponseValid) {
         this.signUpResponseValid = signUpResponseValid;
     }
+
+
 
 
     @GetMapping("/signIn")
@@ -23,13 +26,23 @@ public class AccountController {
         return "account/signIn";
     }
 
-
-
     @GetMapping("/signUp")
     public String signUpForm(Model model) {
         model.addAttribute("SignUpResponse", new SignUpResponse());
         return "account/signUp";
     }
+
+    @PostMapping("/signUpEmailChk")
+    @ResponseBody
+    public void emailChk_Process(@RequestParam("data") String email) {
+        System.out.println(email + "에게 메시지 전송 준비");
+        //SignUpEmailChk signUpEmailChk = new SignUpEmailChk(email);
+    }
+
+
+
+
+
     @PostMapping("/signUp_Process")
     public String signUpResponse(@ModelAttribute SignUpResponse signUpResponse, Errors errors) { //Error Code 작성 필요.
         /*SignUpResponseValidMethod(signUpResponseValid);
@@ -41,9 +54,9 @@ public class AccountController {
         }
 
         System.out.println("ERROR STATUS(값 체크) : " + errors.hasErrors());
-
         System.out.println(signUpResponse.getUser_id());
         System.out.println("Success");
+
         return "redirect:/";
     }
 
