@@ -3,6 +3,8 @@ package byk.pinM.controller.Account;
 import byk.pinM.entity.Account.SignUpResponse;
 import byk.pinM.service.SMTP.SignUpEmailChk;
 import byk.pinM.service.SignUpResponseValid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,24 +13,26 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class AccountController {
-
+    private static final Logger logger = LogManager.getLogger("클래스 : " + AccountController.class + "---------------------");
     private SignUpResponseValid signUpResponseValid;
     @Autowired
     public void SignUpResponseValidMethod (SignUpResponseValid signUpResponseValid) {
         this.signUpResponseValid = signUpResponseValid;
     }
 
-
-
-
     @GetMapping("/signIn")
     public String signIn(Model model) {
         return "account/signIn";
     }
 
+
+
+
+    //SignUp Part
     @GetMapping("/signUp")
     public String signUpForm(Model model) {
         model.addAttribute("SignUpResponse", new SignUpResponse());
+
         return "account/signUp";
     }
 
@@ -36,12 +40,9 @@ public class AccountController {
     @ResponseBody
     public void emailChk_Process(@RequestParam("data") String email) {
         System.out.println(email + "에게 메시지 전송 준비");
-        //SignUpEmailChk signUpEmailChk = new SignUpEmailChk(email);
+        SignUpEmailChk signUpEmailChk = new SignUpEmailChk();
+        signUpEmailChk.sendEmailAndGenerateRandomNumber(email);
     }
-
-
-
-
 
     @PostMapping("/signUp_Process")
     public String signUpResponse(@ModelAttribute SignUpResponse signUpResponse, Errors errors) { //Error Code 작성 필요.
@@ -60,9 +61,4 @@ public class AccountController {
         return "redirect:/";
     }
 
-    //테스트용
-    @GetMapping("/asd")
-    public String testPage(Model model) {
-        return "/asd";
-    }
 }

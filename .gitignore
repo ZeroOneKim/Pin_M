@@ -37,8 +37,11 @@ out/
 *.html
 *.js
 *.css
-src/main/resources/application.properties
 *.jpg
 *.png
 mySecurityInfo.java
 !MyCommon.js
+
+# More Setting File
+src/main/resources/application.properties
+log4j2.xml
