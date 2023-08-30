@@ -1,6 +1,7 @@
 package byk.pinM.controller.Account;
 
 import byk.pinM.entity.Account.SignUpResponse;
+import byk.pinM.service.SMTP.EmailAndVefrifiactionCode;
 import byk.pinM.service.SMTP.SignUpEmailChk;
 import byk.pinM.service.SignUpResponseValid;
 import org.apache.logging.log4j.LogManager;
@@ -11,10 +12,18 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 @Controller
 public class AccountController {
     private static final Logger logger = LogManager.getLogger("클래스 : " + AccountController.class + "---------------------");
     private SignUpResponseValid signUpResponseValid;
+    private SignUpEmailChk signUpEmailChk;
+
+    public AccountController(SignUpEmailChk signUpEmailChk) {
+        this.signUpEmailChk = signUpEmailChk;
+    }
+
     @Autowired
     public void SignUpResponseValidMethod (SignUpResponseValid signUpResponseValid) {
         this.signUpResponseValid = signUpResponseValid;
@@ -22,6 +31,8 @@ public class AccountController {
 
     @GetMapping("/signIn")
     public String signIn(Model model) {
+        EmailAndVefrifiactionCode emailAndVefrifiactionCode = new EmailAndVefrifiactionCode();
+
         return "account/signIn";
     }
 
@@ -40,9 +51,9 @@ public class AccountController {
     @ResponseBody
     public void emailChk_Process(@RequestParam("data") String email) {
         System.out.println(email + "에게 메시지 전송 준비");
-        SignUpEmailChk signUpEmailChk = new SignUpEmailChk();
         signUpEmailChk.sendEmailAndGenerateRandomNumber(email);
     }
+
 
     @PostMapping("/signUp_Process")
     public String signUpResponse(@ModelAttribute SignUpResponse signUpResponse, Errors errors) { //Error Code 작성 필요.
