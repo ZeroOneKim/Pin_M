@@ -1,7 +1,7 @@
 package byk.pinM.controller.Account;
 
 import byk.pinM.entity.Account.SignUpResponse;
-import byk.pinM.service.SMTP.EmailAndVefrifiactionCode;
+import byk.pinM.service.SMTP.EmailAndVerificationCode;
 import byk.pinM.service.SMTP.SignUpEmailChk;
 import byk.pinM.service.SignUpResponseValid;
 import org.apache.logging.log4j.LogManager;
@@ -17,7 +17,7 @@ public class AccountController {
     private static final Logger logger = LogManager.getLogger("클래스 : " + AccountController.class + "---------------------");
     private SignUpResponseValid signUpResponseValid;
     private SignUpEmailChk signUpEmailChk;
-    private EmailAndVefrifiactionCode emailAndVefrifiactionCode;
+    private EmailAndVerificationCode emailAndVerificationCode;
 
     public AccountController(SignUpEmailChk signUpEmailChk) {
         this.signUpEmailChk = signUpEmailChk;
@@ -28,13 +28,13 @@ public class AccountController {
         this.signUpResponseValid = signUpResponseValid;
     }
     @Autowired
-    public void setEmailAndVefrifiactionCode(EmailAndVefrifiactionCode emailAndVefrifiactionCode) {
-        this.emailAndVefrifiactionCode = emailAndVefrifiactionCode;
+    public void setEmailAndVefrifiactionCode(EmailAndVerificationCode emailAndVerificationCode) {
+        this.emailAndVerificationCode = emailAndVerificationCode;
     }
 
     @GetMapping("/signIn")
     public String signIn(Model model) {
-        EmailAndVefrifiactionCode emailAndVefrifiactionCode = new EmailAndVefrifiactionCode();
+        //EmailAndVefrifiactionCode emailAndVefrifiactionCode = new EmailAndVefrifiactionCode();
 
         return "account/signIn";
     }
@@ -42,7 +42,7 @@ public class AccountController {
 
 
 
-    //SignUp Part
+    //====================================================== SignUp Part ===========================================================
     @GetMapping("/signUp")
     public String signUpForm(Model model) {
         model.addAttribute("SignUpResponse", new SignUpResponse());
@@ -56,17 +56,18 @@ public class AccountController {
         System.out.println(email + "에게 메시지 전송 준비");
         signUpEmailChk.sendEmailAndGenerateRandomNumber(email);
     }
+
     @PostMapping("/signUpEmailChkWithNum")
     @ResponseBody
     public void emailNumberChk_Process(@RequestParam("data") String email, @RequestParam("data2") String validNum) {
         System.out.println(email + "   " + validNum);
-        boolean emailChkToken = emailAndVefrifiactionCode.isValidCheckCode(email, validNum);
-        System.out.println("이메일 인증 상태 : " + emailChkToken);
+        boolean emailChkToken = emailAndVerificationCode.isValidCheckCode(email, validNum);
+        System.out.println("이메일 인증 상태 : " + emailChkToken); //TODO True or False 회원가입 이전에 체킹
     }
 
 
     @PostMapping("/signUp_Process")
-    public String signUpResponse(@ModelAttribute SignUpResponse signUpResponse, Errors errors) { //Error Code 작성 필요.
+    public String signUpResponse(@ModelAttribute SignUpResponse signUpResponse, Errors errors) { //TODO Error Code 작성 필요.
         /*SignUpResponseValidMethod(signUpResponseValid);
         signUpResponseValid.validate(signUpResponse, errors);*/
         if(errors.hasErrors()) {

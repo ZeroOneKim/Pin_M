@@ -7,7 +7,7 @@ import java.util.Random;
 
 @Service
 public class SignUpEmailChk {
-    private EmailAndVefrifiactionCode emailAndVefrifiactionCode;
+    private EmailAndVerificationCode emailAndVerificationCode;
 
     private MailSenderSMTP mailSenderSMTP;
     @Autowired
@@ -16,15 +16,15 @@ public class SignUpEmailChk {
     }
 
     @Autowired
-    public void setEmailAndVefrifiactionCode(EmailAndVefrifiactionCode emailAndVefrifiactionCode) {
-        this.emailAndVefrifiactionCode = emailAndVefrifiactionCode;
+    public void setEmailAndVefrifiactionCode(EmailAndVerificationCode emailAndVerificationCode) {
+        this.emailAndVerificationCode = emailAndVerificationCode;
     }
 
     public void sendEmailAndGenerateRandomNumber(String chkEmail_Id) {
         if (!chkEmail_Id.equals("")) {
             String val = RandomNumber();
             mailSenderSMTP.sendEmailforSignUp(chkEmail_Id, val);
-            emailAndVefrifiactionCode.setEmailMapping(chkEmail_Id, val);
+            emailAndVerificationCode.setEmailMapping(chkEmail_Id, val);
         }
     }
 
