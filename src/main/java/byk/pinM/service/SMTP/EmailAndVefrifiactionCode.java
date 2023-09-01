@@ -12,7 +12,7 @@ public class EmailAndVefrifiactionCode {
         this.emailMapping.put(email, code);
     }
 
-    public boolean validCheckCode(String email, String password) {
+    public boolean isvalidCheckCode(String email, String password) {
         if(emailMapping.get(email) != null && emailMapping.get(email).equals(password)) return true;
         return false;
     }

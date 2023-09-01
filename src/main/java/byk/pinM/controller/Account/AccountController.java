@@ -60,7 +60,7 @@ public class AccountController {
     @ResponseBody
     public void emailNumberChk_Process(@RequestParam("data") String email, @RequestParam("data2") String validNum) {
         System.out.println(email + "   " + validNum);
-        boolean emailChkToken = emailAndVefrifiactionCode.validCheckCode(email, validNum);
+        boolean emailChkToken = emailAndVefrifiactionCode.isvalidCheckCode(email, validNum);
         System.out.println("이메일 인증 상태 : " + emailChkToken);
     }
 
