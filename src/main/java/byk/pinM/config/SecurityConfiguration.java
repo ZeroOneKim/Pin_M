@@ -13,8 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests() //TODO csrf 방어 추가
-                .mvcMatchers("/", "/signUp","/signUpEmailChk","/signUp_Process", "/signIn",
-                        "/imgs/*", "/ajax/**","/login-link", "/asd").permitAll()
+                .mvcMatchers("/", "/signUp","/signUpEmailChk","/signUp_Process", "/signIn", "/signUpEmailChkWithNum",
+                        "/imgs/*","/login-link", "/asd").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/profile/*").permitAll()
                     .anyRequest().authenticated()
                     .and()

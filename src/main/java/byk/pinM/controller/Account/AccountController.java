@@ -12,13 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-
 @Controller
 public class AccountController {
     private static final Logger logger = LogManager.getLogger("클래스 : " + AccountController.class + "---------------------");
     private SignUpResponseValid signUpResponseValid;
     private SignUpEmailChk signUpEmailChk;
+    private EmailAndVefrifiactionCode emailAndVefrifiactionCode;
 
     public AccountController(SignUpEmailChk signUpEmailChk) {
         this.signUpEmailChk = signUpEmailChk;
@@ -27,6 +26,10 @@ public class AccountController {
     @Autowired
     public void SignUpResponseValidMethod (SignUpResponseValid signUpResponseValid) {
         this.signUpResponseValid = signUpResponseValid;
+    }
+    @Autowired
+    public void setEmailAndVefrifiactionCode(EmailAndVefrifiactionCode emailAndVefrifiactionCode) {
+        this.emailAndVefrifiactionCode = emailAndVefrifiactionCode;
     }
 
     @GetMapping("/signIn")
@@ -52,6 +55,13 @@ public class AccountController {
     public void emailChk_Process(@RequestParam("data") String email) {
         System.out.println(email + "에게 메시지 전송 준비");
         signUpEmailChk.sendEmailAndGenerateRandomNumber(email);
+    }
+    @PostMapping("/signUpEmailChkWithNum")
+    @ResponseBody
+    public void emailNumberChk_Process(@RequestParam("data") String email, @RequestParam("data2") String validNum) {
+        System.out.println(email + "   " + validNum);
+        boolean emailChkToken = emailAndVefrifiactionCode.validCheckCode(email, validNum);
+        System.out.println("이메일 인증 상태 : " + emailChkToken);
     }
 
 

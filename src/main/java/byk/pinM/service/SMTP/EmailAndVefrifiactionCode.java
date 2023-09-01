@@ -9,15 +9,13 @@ public class EmailAndVefrifiactionCode {
     private HashMap<String, String> emailMapping = new HashMap<>();
 
     public void setEmailMapping(String email, String code) {
-        emailMapping.put(email, code);
+        this.emailMapping.put(email, code);
     }
 
-    public Boolean chkEmailMapping(String email, String password) {
-        if(emailMapping.containsKey(email)) {
-
-            return true;
-        } else {
-            return false;
-        }
+    public boolean validCheckCode(String email, String password) {
+        if(emailMapping.get(email) != null && emailMapping.get(email).equals(password)) return true;
+        return false;
     }
+
+
 }
