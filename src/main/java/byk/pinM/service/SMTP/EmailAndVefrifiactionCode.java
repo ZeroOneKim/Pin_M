@@ -13,7 +13,7 @@ public class EmailAndVefrifiactionCode {
 
     public void setEmailMapping(String email, String code) {
         this.emailMapping.put(email, code);
-        timer.schedule(new RemoveEmailMappingCode(email), 15000);
+        timer.schedule(new RemoveEmailMappingCode(email), 60000*5);
     }
 
     public boolean isValidCheckCode(String email, String password) {
