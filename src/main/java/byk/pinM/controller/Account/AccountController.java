@@ -1,6 +1,7 @@
 package byk.pinM.controller.Account;
 
 import byk.pinM.entity.Account.SignUpResponse;
+import byk.pinM.entity.Account.User;
 import byk.pinM.service.SMTP.EmailAndVerificationCode;
 import byk.pinM.service.SMTP.SignUpEmailChk;
 import byk.pinM.service.SignUpResponseValid;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class AccountController {
+    private boolean isEmailCheck = false;
+
     private static final Logger logger = LogManager.getLogger("클래스 : " + AccountController.class + "---------------------");
     private SignUpResponseValid signUpResponseValid;
     private SignUpEmailChk signUpEmailChk;
@@ -49,36 +52,44 @@ public class AccountController {
 
         return "account/signUp";
     }
-
+    //이메일 전송
     @PostMapping("/signUpEmailChk")
     @ResponseBody
     public void emailChk_Process(@RequestParam("data") String email) {
         System.out.println(email + "에게 메시지 전송 준비");
-        signUpEmailChk.sendEmailAndGenerateRandomNumber(email);
+        signUpEmailChk.sendEmailAndGenerateRandomNumber(email); //Send Email
     }
-
+    //이메일 확인
     @PostMapping("/signUpEmailChkWithNum")
     @ResponseBody
     public void emailNumberChk_Process(@RequestParam("data") String email, @RequestParam("data2") String validNum) {
         System.out.println(email + "   " + validNum);
-        boolean emailChkToken = emailAndVerificationCode.isValidCheckCode(email, validNum);
-        System.out.println("이메일 인증 상태 : " + emailChkToken); //TODO True or False 회원가입 이전에 체킹
+        isEmailCheck = emailAndVerificationCode.isValidCheckCode(email, validNum);
+        System.out.println("이메일 인증 상태 : " + isEmailCheck); //TODO True or False 회원가입 이전에 체킹
     }
 
-
+    //회원가입 버튼
     @PostMapping("/signUp_Process")
     public String signUpResponse(@ModelAttribute SignUpResponse signUpResponse, Errors errors) { //TODO Error Code 작성 필요.
-        /*SignUpResponseValidMethod(signUpResponseValid);
-        signUpResponseValid.validate(signUpResponse, errors);*/
+        if(errors.hasErrors()) return "account/signUp";
+
+        SignUpResponseValidMethod(signUpResponseValid);
+        signUpResponseValid.validate(signUpResponse, errors);
         if(errors.hasErrors()) {
             System.out.println("failed");
             System.out.println("ERROR STATUS(값 체크) : " + errors.hasErrors());
-            return "account/signUp";  //에러처리 예정
+            return "account/signUp";
         }
 
-        System.out.println("ERROR STATUS(값 체크) : " + errors.hasErrors());
-        System.out.println(signUpResponse.getUser_id());
-        System.out.println("Success");
+        if(isEmailCheck) {
+            return "account/signUp";
+        }
+
+        User user = new User();
+        user.setUser_id(signUpResponse.getEmail());
+
+
+
 
         return "redirect:/";
     }

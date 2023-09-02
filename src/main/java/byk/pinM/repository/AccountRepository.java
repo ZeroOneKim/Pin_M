@@ -9,5 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 public interface AccountRepository extends JpaRepository<User, String> {
     boolean existsById(String user_id);
 
+    boolean existsByNickname(String nickname);
 
 }
