@@ -8,8 +8,6 @@ import javax.persistence.Id;
 public class User {
 
     @Id
-    private Long user_no;
-
     @Column(unique = true)
     private String user_id;
     private String nickname;
@@ -18,26 +16,16 @@ public class User {
 
     @Column(unique = true)
     private String email;
-    private boolean email_chk;
-    private String email_token;
+    //EMAIL 체크 소스에서.
 
     private String phone;
     private String address;
     private String address2;
 
-    private String rgst_dt; //가입일
-    private String last_login_dt;
+    //가입일 자동입력
     private int login_err_cnt;
     private boolean use_lock;
-
     private Boolean text_agree;
-
-    public Long getUser_no() {
-        return user_no;
-    }
-    public void setUser_no(Long user_no) {
-        this.user_no = user_no;
-    }
 
     public String getUser_id() {
         return user_id;
@@ -74,20 +62,6 @@ public class User {
         this.email = email;
     }
 
-    public boolean isEmail_chk() {
-        return email_chk;
-    }
-    public void setEmail_chk(boolean email_chk) {
-        this.email_chk = email_chk;
-    }
-
-    public String getEmail_token() {
-        return email_token;
-    }
-    public void setEmail_token(String email_token) {
-        this.email_token = email_token;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -107,20 +81,6 @@ public class User {
     }
     public void setAddress2(String address2) {
         this.address2 = address2;
-    }
-
-    public String getRgst_dt() {
-        return rgst_dt;
-    }
-    public void setRgst_dt(String rgst_dt) {
-        this.rgst_dt = rgst_dt;
-    }
-
-    public String getLast_login_dt() {
-        return last_login_dt;
-    }
-    public void setLast_login_dt(String last_login_dt) {
-        this.last_login_dt = last_login_dt;
     }
 
     public int getLogin_err_cnt() {
