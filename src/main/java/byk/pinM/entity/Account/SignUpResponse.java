@@ -1,8 +1,6 @@
 package byk.pinM.entity.Account;
 
 public class SignUpResponse {
-    //JavaScript 경우 개발자도구에서 변환이 가능하므로 후에 검증 소스 추가.
-    // 아직 필요없는 소스
     private String user_id;
     private String nickname;
     private String password;
