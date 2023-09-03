@@ -3,10 +3,11 @@ package byk.pinM.entity.Account;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "sy_user_mt")
 public class User {
-
     @Id
     @Column(unique = true)
     private String user_id;
@@ -25,7 +26,8 @@ public class User {
     //가입일 자동입력
     private int login_err_cnt;
     private boolean use_lock;
-    private Boolean text_agree;
+    private boolean text_agree;
+
 
     public String getUser_id() {
         return user_id;
@@ -98,5 +100,58 @@ public class User {
     }
 
     public boolean getText_agree() { return text_agree; }
-    public void setText_agree() { this.text_agree = text_agree; }
+    public void setText_agree(boolean text_agree) { this.text_agree = text_agree; }
+
+
+    public static UserBuilder builder() {
+        return new UserBuilder();
+    }
+    public static class UserBuilder {
+        private User user = new User();
+        public UserBuilder user_id(String user_id) {
+            user.setUser_id(user_id);
+            return this;
+        }
+        public UserBuilder nickname(String nickname) {
+            user.setNickname(nickname);
+            return this;
+        }
+        public UserBuilder password(String password) {
+            user.setPassword(password);
+            return this;
+        }
+        public UserBuilder email(String email) {
+            user.setEmail(email);
+            return this;
+        }
+        public UserBuilder phone(String phone) {
+            user.setPhone(phone);
+            return this;
+        }
+        public UserBuilder address(String address) {
+            user.setAddress(address);
+            return this;
+        }
+        public UserBuilder address2(String address2) {
+            user.setAddress2(address2);
+            return this;
+        }
+        public UserBuilder login_err_cnt(int errCnt) {
+            user.setLogin_err_cnt(errCnt);
+            return this;
+        }
+        public UserBuilder use_lock(boolean use_lock) {
+            user.setUse_lock(use_lock);
+            return this;
+        }
+        public UserBuilder text_agree(boolean text_agree) {
+            user.setText_agree(text_agree);
+            return this;
+        }
+
+
+        public User build() {
+            return user;
+        }
+    }
 }
