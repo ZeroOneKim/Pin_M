@@ -1,7 +1,7 @@
 package byk.pinM.controller.Account;
 
 import byk.pinM.entity.Account.SignUpResponse;
-import byk.pinM.entity.Account.User;
+import byk.pinM.service.JpaService;
 import byk.pinM.service.SMTP.EmailAndVerificationCode;
 import byk.pinM.service.SMTP.SignUpEmailChk;
 import byk.pinM.service.SignUpResponseValid;
@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+
 @Controller
 public class AccountController {
     private boolean isEmailCheck = false;
@@ -21,9 +22,12 @@ public class AccountController {
     private SignUpResponseValid signUpResponseValid;
     private SignUpEmailChk signUpEmailChk;
     private EmailAndVerificationCode emailAndVerificationCode;
+    private JpaService jpaService;
 
-    public AccountController(SignUpEmailChk signUpEmailChk) {
+    @Autowired
+    public AccountController(SignUpEmailChk signUpEmailChk, JpaService jpaService) {
         this.signUpEmailChk = signUpEmailChk;
+        this.jpaService = jpaService;
     }
 
     @Autowired
@@ -37,8 +41,6 @@ public class AccountController {
 
     @GetMapping("/signIn")
     public String signIn(Model model) {
-        //EmailAndVefrifiactionCode emailAndVefrifiactionCode = new EmailAndVefrifiactionCode();
-
         return "account/signIn";
     }
 
@@ -71,8 +73,9 @@ public class AccountController {
     //회원가입 버튼
     @PostMapping("/signUp_Process")
     public String signUpResponse(@ModelAttribute SignUpResponse signUpResponse, Errors errors) { //TODO Error Code 작성 필요.
-        if(errors.hasErrors()) return "account/signUp";
-
+        if(errors.hasErrors()) {
+            return "account/signUp";
+        }
         SignUpResponseValidMethod(signUpResponseValid);
         signUpResponseValid.validate(signUpResponse, errors);
         if(errors.hasErrors()) {
@@ -81,15 +84,11 @@ public class AccountController {
             return "account/signUp";
         }
 
-        if(isEmailCheck) {
+        if(isEmailCheck) { //후에 ! 붙이기
             return "account/signUp";
         }
 
-        User user = new User();
-        user.setUser_id(signUpResponse.getEmail());
-
-
-
+        jpaService.SignUpExecute(signUpResponse);
 
         return "redirect:/";
     }
