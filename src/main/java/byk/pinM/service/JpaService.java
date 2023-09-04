@@ -3,6 +3,7 @@ package byk.pinM.service;
 import byk.pinM.entity.Account.SignUpResponse;
 import byk.pinM.entity.Account.User;
 import byk.pinM.repository.AccountRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -10,8 +11,12 @@ import org.springframework.stereotype.Service;
 public class JpaService {
     private AccountRepository accountRepository;
 
-    public JpaService(AccountRepository accountRepository) {
+    private PasswordEncoder passwordEncoder;
+
+
+    public JpaService(AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
         this.accountRepository = accountRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     //SignUp
@@ -19,7 +24,7 @@ public class JpaService {
         User user = User.builder()
                 .user_id(signUpResponse.getUser_id())
                 .nickname(signUpResponse.getNickname())
-                .password(signUpResponse.getPassword())
+                .password(passwordEncoder.encode(signUpResponse.getPassword()))
                 .email(signUpResponse.getEmail())
                 .phone(signUpResponse.getPhone())
                 .address(signUpResponse.getAddress())
@@ -29,6 +34,7 @@ public class JpaService {
                 .text_agree(true)
                 .build();
         accountRepository.save(user);
+
     }
 
 
