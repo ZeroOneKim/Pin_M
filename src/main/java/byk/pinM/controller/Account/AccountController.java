@@ -1,13 +1,14 @@
 package byk.pinM.controller.Account;
 
 import byk.pinM.entity.Account.SignUpResponse;
-import byk.pinM.service.JpaService;
+import byk.pinM.service.Account.AccountJpaService;
 import byk.pinM.service.SMTP.EmailAndVerificationCode;
 import byk.pinM.service.SMTP.SignUpEmailChk;
 import byk.pinM.service.SignUpResponseValid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -22,12 +23,12 @@ public class AccountController {
     private SignUpResponseValid signUpResponseValid;
     private SignUpEmailChk signUpEmailChk;
     private EmailAndVerificationCode emailAndVerificationCode;
-    private JpaService jpaService;
+    private AccountJpaService accountJpaService;
 
     @Autowired
-    public AccountController(SignUpEmailChk signUpEmailChk, JpaService jpaService) {
+    public AccountController(SignUpEmailChk signUpEmailChk, AccountJpaService accountJpaService) {
         this.signUpEmailChk = signUpEmailChk;
-        this.jpaService = jpaService;
+        this.accountJpaService = accountJpaService;
     }
 
     @Autowired
@@ -42,6 +43,12 @@ public class AccountController {
     @GetMapping("/signIn")
     public String signIn(Model model) {
         return "account/signIn";
+    }
+
+    @PostMapping("/signIn-process")
+    public void signInProcess(@RequestParam("user_id") String id, @RequestParam("password") String password) {
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(id, password);
+
     }
 
 
@@ -88,7 +95,7 @@ public class AccountController {
             return "account/signUp";
         }
 
-        jpaService.SignUpExecute(signUpResponse);
+        accountJpaService.SignUpExecute(signUpResponse);
 
         return "redirect:/";
     }
