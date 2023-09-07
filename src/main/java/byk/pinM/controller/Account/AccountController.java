@@ -8,7 +8,10 @@ import byk.pinM.service.SignUpResponseValid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -24,8 +27,10 @@ public class AccountController {
     private SignUpEmailChk signUpEmailChk;
     private EmailAndVerificationCode emailAndVerificationCode;
     private AccountJpaService accountJpaService;
-
     @Autowired
+    private AuthenticationManager authenticationManager;
+
+
     public AccountController(SignUpEmailChk signUpEmailChk, AccountJpaService accountJpaService) {
         this.signUpEmailChk = signUpEmailChk;
         this.accountJpaService = accountJpaService;
@@ -46,8 +51,19 @@ public class AccountController {
     }
 
     @PostMapping("/signIn-process")
-    public void signInProcess(@RequestParam("user_id") String id, @RequestParam("password") String password) {
+    public String signInProcess(@RequestParam("user_id") String id, @RequestParam("password") String password) {
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(id, password);
+
+        System.out.println("인증 전의 값 : " + SecurityContextHolder.getContext());
+        Authentication authentication = authenticationManager.authenticate(authToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        System.out.println("인증 후의 값 : " + SecurityContextHolder.getContext());
+        try {
+            return "redirect:/";
+        } catch (Exception e) {
+            logger.info("ERROR] : SignIn 불가능 합니다.");
+            return "/signIn";
+        }
 
     }
 
