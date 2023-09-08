@@ -11,11 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/account")
 public class SignInController {
     private static final Logger logger = LogManager.getLogger("클래스 : " + SignInController.class);
 
@@ -24,7 +22,7 @@ public class SignInController {
     @GetMapping("/signIn")
     public String signIn(Model model) {
         logger.info("\n try - SignIn 시도 \n");
-        return "/signIn";
+        return "account/signIn";
     }
 
     @PostMapping("/signIn-process")
@@ -40,7 +38,7 @@ public class SignInController {
             return "redirect:/";
         } catch (Exception e) {
             logger.info("\n ERROR] : SignIn 실패. \nReason : " + e);
-            return "/signIn";
+            return "account/signIn";
         }
 
     }
