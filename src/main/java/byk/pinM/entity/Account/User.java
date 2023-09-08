@@ -27,6 +27,7 @@ public class User {
     private int login_err_cnt;
     private boolean use_lock;
     private boolean text_agree;
+    private int role_id;
 
 
     public String getUser_id() {
@@ -102,10 +103,14 @@ public class User {
     public boolean getText_agree() { return text_agree; }
     public void setText_agree(boolean text_agree) { this.text_agree = text_agree; }
 
+    public int getRole_id() { return role_id; }
+    public void setRole_id(int role_id) { this.role_id = role_id; }
+
 
     public static UserBuilder builder() {
         return new UserBuilder();
     }
+
     public static class UserBuilder {
         private User user = new User();
         public UserBuilder user_id(String user_id) {
@@ -146,6 +151,10 @@ public class User {
         }
         public UserBuilder text_agree(boolean text_agree) {
             user.setText_agree(text_agree);
+            return this;
+        }
+        public UserBuilder role_id(int role_id) {
+            user.setRole_id(role_id);
             return this;
         }
 
