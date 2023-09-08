@@ -5,13 +5,7 @@ import byk.pinM.service.Account.AccountJpaService;
 import byk.pinM.service.SMTP.EmailAndVerificationCode;
 import byk.pinM.service.SMTP.SignUpEmailChk;
 import byk.pinM.service.SignUpResponseValid;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -19,19 +13,15 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-public class AccountController {
+public class SignUpController {
     private boolean isEmailCheck = false;
-
-    private static final Logger logger = LogManager.getLogger("클래스 : " + AccountController.class + "---------------------");
     private SignUpResponseValid signUpResponseValid;
     private SignUpEmailChk signUpEmailChk;
     private EmailAndVerificationCode emailAndVerificationCode;
     private AccountJpaService accountJpaService;
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
 
-    public AccountController(SignUpEmailChk signUpEmailChk, AccountJpaService accountJpaService) {
+    public SignUpController(SignUpEmailChk signUpEmailChk, AccountJpaService accountJpaService) {
         this.signUpEmailChk = signUpEmailChk;
         this.accountJpaService = accountJpaService;
     }
@@ -45,32 +35,8 @@ public class AccountController {
         this.emailAndVerificationCode = emailAndVerificationCode;
     }
 
-    @GetMapping("/signIn")
-    public String signIn(Model model) {
-        return "account/signIn";
-    }
-
-    @PostMapping("/signIn-process")
-    public String signInProcess(@RequestParam("user_id") String id, @RequestParam("password") String password) {
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(id, password);
-
-        System.out.println("인증 전의 값 : " + SecurityContextHolder.getContext());
-        Authentication authentication = authenticationManager.authenticate(authToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        System.out.println("인증 후의 값 : " + SecurityContextHolder.getContext());
-        try {
-            return "redirect:/";
-        } catch (Exception e) {
-            logger.info("ERROR] : SignIn 불가능 합니다.");
-            return "/signIn";
-        }
-
-    }
 
 
-
-
-    //====================================================== SignUp Part ===========================================================
     @GetMapping("/signUp")
     public String signUpForm(Model model) {
         model.addAttribute("SignUpResponse", new SignUpResponse());
