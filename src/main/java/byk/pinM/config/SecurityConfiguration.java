@@ -28,16 +28,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests() //TODO csrf 방어 추가
-                .mvcMatchers("/", "/signUp","/signUpEmailChk","/signUp_Process", "/signUpEmailChkWithNum", "/signIn-process",
-                        "/imgs/*","/login-link", "/asd").permitAll()
-                .mvcMatchers(HttpMethod.GET, "/profile/*").permitAll()
-                    .anyRequest().authenticated()
-                    .and()
-                .formLogin()
-                    .loginPage("/signIn").permitAll()
-                    .and()
-                .logout()
+                    .mvcMatchers("/", "/imgs/*", "/signUp","/signUpEmailChk","/signUp_Process", "/signUpEmailChkWithNum","/signIn-process")
                     .permitAll()
+                    .anyRequest().authenticated()
+                .and()
+                    .formLogin().loginPage("/signIn").permitAll()
+                .and()
+                    .logout().permitAll()
                     .logoutSuccessUrl("/");
 
     }
