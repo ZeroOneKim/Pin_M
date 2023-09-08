@@ -1,12 +1,13 @@
 package byk.pinM.controller.content;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-@RequestMapping("/content")
 public class MainController {
+
+    @GetMapping("/content")
     public String mainPage() {
-        return "/main";
+        return "content/main";
     }
 }
