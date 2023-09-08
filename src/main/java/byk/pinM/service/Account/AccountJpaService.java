@@ -1,4 +1,4 @@
-package byk.pinM.service;
+package byk.pinM.service.Account;
 
 import byk.pinM.entity.Account.SignUpResponse;
 import byk.pinM.entity.Account.User;
@@ -8,13 +8,12 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class JpaService {
+public class AccountJpaService {
     private AccountRepository accountRepository;
 
     private PasswordEncoder passwordEncoder;
 
-
-    public JpaService(AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
+    public AccountJpaService(AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
         this.accountRepository = accountRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -32,10 +31,9 @@ public class JpaService {
                 .login_err_cnt(0)
                 .use_lock(false)
                 .text_agree(true)
+                .role_id(1)
                 .build();
         accountRepository.save(user);
-
     }
-
 
 }
