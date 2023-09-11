@@ -35,7 +35,7 @@ public class SignInController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         try {
-            return "redirect:/";
+            return "redirect:/content";
         } catch (Exception e) {
             logger.info("\n ERROR] : SignIn 실패. \nReason : " + e);
             return "account/signIn";
