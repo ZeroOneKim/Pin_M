@@ -21,8 +21,9 @@ public class SignUpController {
     private AccountJpaService accountJpaService;
 
 
-    public SignUpController(SignUpEmailChk signUpEmailChk, AccountJpaService accountJpaService) {
+    public SignUpController(SignUpEmailChk signUpEmailChk, EmailAndVerificationCode emailAndVerificationCode, AccountJpaService accountJpaService) {
         this.signUpEmailChk = signUpEmailChk;
+        this.emailAndVerificationCode = emailAndVerificationCode;
         this.accountJpaService = accountJpaService;
     }
 
@@ -30,10 +31,7 @@ public class SignUpController {
     public void SignUpResponseValidMethod (SignUpResponseValid signUpResponseValid) {
         this.signUpResponseValid = signUpResponseValid;
     }
-    @Autowired
-    public void setEmailAndVefrifiactionCode(EmailAndVerificationCode emailAndVerificationCode) {
-        this.emailAndVerificationCode = emailAndVerificationCode;
-    }
+
 
 
 
@@ -69,6 +67,7 @@ public class SignUpController {
         signUpResponseValid.validate(signUpResponse, errors);
         if(errors.hasErrors()) {
             System.out.println("failed");
+
             System.out.println("ERROR STATUS(값 체크) : " + errors.hasErrors());
             return "account/signUp";
         }
