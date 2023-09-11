@@ -39,6 +39,11 @@ out/
 *.css
 *.jpg
 *.png
+*.svg
+*.eot
+*.ttf
+*.woff
+*.woff2
 mySecurityInfo.java
 !MyCommon.js
 
