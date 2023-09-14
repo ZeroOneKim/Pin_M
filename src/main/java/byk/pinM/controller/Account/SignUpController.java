@@ -5,6 +5,8 @@ import byk.pinM.service.Account.AccountJpaService;
 import byk.pinM.service.SMTP.EmailAndVerificationCode;
 import byk.pinM.service.SMTP.SignUpEmailChk;
 import byk.pinM.service.SignUpResponseValid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,25 +16,14 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class SignUpController {
+    private static final Logger logger = LogManager.getLogger("클래스 Log] " + SignUpController.class);
+
     private boolean isEmailCheck = false;
-    private SignUpResponseValid signUpResponseValid;
-    private SignUpEmailChk signUpEmailChk;
-    private EmailAndVerificationCode emailAndVerificationCode;
-    private AccountJpaService accountJpaService;
 
-
-    public SignUpController(SignUpEmailChk signUpEmailChk, EmailAndVerificationCode emailAndVerificationCode, AccountJpaService accountJpaService) {
-        this.signUpEmailChk = signUpEmailChk;
-        this.emailAndVerificationCode = emailAndVerificationCode;
-        this.accountJpaService = accountJpaService;
-    }
-
-    @Autowired
-    public void SignUpResponseValidMethod (SignUpResponseValid signUpResponseValid) {
-        this.signUpResponseValid = signUpResponseValid;
-    }
-
-
+    @Autowired private SignUpEmailChk signUpEmailChk;
+    @Autowired private EmailAndVerificationCode emailAndVerificationCode;
+    @Autowired private AccountJpaService accountJpaService;
+    @Autowired private SignUpResponseValid signUpResponseValid;
 
 
     @GetMapping("/signUp")
@@ -63,7 +54,6 @@ public class SignUpController {
         if(errors.hasErrors()) {
             return "account/signUp";
         }
-        SignUpResponseValidMethod(signUpResponseValid);
         signUpResponseValid.validate(signUpResponse, errors);
         if(errors.hasErrors()) {
             System.out.println("failed");
@@ -72,7 +62,7 @@ public class SignUpController {
             return "account/signUp";
         }
 
-        if(isEmailCheck) { //후에 ! 붙이기
+        if(isEmailCheck) { //후에 ! 붙여 검증.
             return "account/signUp";
         }
 
