@@ -1,16 +1,14 @@
 package byk.pinM.service.Account;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class MainContentService {
+    @Autowired
     private JpaQueryService jpaQueryService;
-
-    public MainContentService(JpaQueryService jpaQueryService) {
-        this.jpaQueryService = jpaQueryService;
-    }
 
 
     public String getUserNickname() {
@@ -19,7 +17,6 @@ public class MainContentService {
 
 
         String res = jpaQueryService.SimpleSelectTable(query);
-        System.out.println(res);
         return res;
     }
 }
