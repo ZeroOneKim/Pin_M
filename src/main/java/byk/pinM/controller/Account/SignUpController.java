@@ -1,6 +1,6 @@
 package byk.pinM.controller.Account;
 
-import byk.pinM.entity.Account.SignUpResponse;
+import byk.pinM.entity.Account.get.SignUpResponse;
 import byk.pinM.service.Account.AccountJpaService;
 import byk.pinM.service.SMTP.EmailAndVerificationCode;
 import byk.pinM.service.SMTP.SignUpEmailChk;
