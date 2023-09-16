@@ -1,4 +1,4 @@
-package byk.pinM.entity.Account;
+package byk.pinM.entity.Account.get;
 
 public class SignUpResponse {
     private String user_id;
