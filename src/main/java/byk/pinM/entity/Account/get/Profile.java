@@ -1,13 +1,17 @@
 package byk.pinM.entity.Account.get;
 
 import byk.pinM.entity.Account.User;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Profile {
     @Id
+    @NotBlank
+    @Length(min = 2, max = 10)
     private String nickname;
 
     private String email;

@@ -1,21 +1,33 @@
 package byk.pinM.entity.Account;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "sy_user_mt")
 public class User {
     @Id
     @Column(unique = true)
+    @Length(min = 3, max = 16)
+    @NotBlank
     private String user_id;
+
+    @NotBlank
     private String nickname;
+
+    @Length(min = 4)
     private String password;
     private String before_pwd;
 
     @Column(unique = true)
+    @Email
+    @NotBlank
     private String email;
     //EMAIL 체크 소스에서.
 
