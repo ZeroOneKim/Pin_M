@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -36,4 +37,9 @@ public class ProfileController {
         return "content/profile";
     }
 
+    @PostMapping("/profile/update")
+    public String profileUpdate(@ModelAttribute Profile profile) {
+        //Validated 사용법 파악
+        return null;
+    }
 }
