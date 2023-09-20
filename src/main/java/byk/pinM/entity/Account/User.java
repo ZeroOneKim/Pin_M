@@ -15,7 +15,6 @@ public class User {
     @Id
     @Column(unique = true)
     @Length(min = 3, max = 16)
-    @NotBlank
     private String user_id;
 
     @NotBlank
@@ -27,7 +26,6 @@ public class User {
 
     @Column(unique = true)
     @Email
-    @NotBlank
     private String email;
     //EMAIL 체크 소스에서.
 

@@ -10,14 +10,16 @@ import javax.validation.constraints.NotBlank;
 @Entity
 public class Profile {
     @Id
-    @NotBlank
-    @Length(min = 2, max = 10)
+    @Length(min = 2, max = 12)
     private String nickname;
 
     private String email;
     private String phone;
     private String address;
     private String address2;
+
+    public Profile() {
+    }
 
     public Profile(User user) {
         this.nickname = user.getNickname();
