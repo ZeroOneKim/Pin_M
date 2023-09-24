@@ -1,5 +1,6 @@
 package byk.pinM.service.Account;
 
+import byk.pinM.entity.Account.get.PasswordUpdate;
 import byk.pinM.entity.Account.get.Profile;
 import byk.pinM.entity.Account.get.SignUpResponse;
 import byk.pinM.entity.Account.User;
@@ -62,6 +63,16 @@ public class AccountJpaService {
 
         accountRepository.save(user.get());
     }
+    /**
+     * 패스워드 변경 메서드
+     * @param
+     */
+    public void updatePassword(String newPassword) {
+        Optional<User> user = accountRepository.findById(SecurityContextHolder.getContext().getAuthentication().getName());
 
+        user.get().setPassword(passwordEncoder.encode(newPassword));
+
+        accountRepository.save(user.get());
+    }
 
 }
