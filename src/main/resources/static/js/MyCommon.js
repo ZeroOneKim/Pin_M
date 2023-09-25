@@ -1,4 +1,8 @@
+/*
+    웹측 JavaScript 부분이 하드코딩이 되어 코드가 더러워져서 조금 반복되는 소스는 따로 빼게 됨.
+*/
 
+//sendEml
 function sendToServerSingleData(Value, url, csrfToken, SuccMsg, FailMsg) {
   if(SuccMsg == undefined) SuccMsg = "Success"
   if(FailMsg == undefined) FailMsg = "failed"
@@ -16,7 +20,7 @@ function sendToServerSingleData(Value, url, csrfToken, SuccMsg, FailMsg) {
   var formData = "data=" + encodeURIComponent(Value)
   xhr.send(formData);
 }
-
+//chkEml
 function sendToServerDoubleData(Value, Value2 , url, csrfToken, SuccMsg, FailMsg) {
   if(SuccMsg == undefined) SuccMsg = "Success"
   if(FailMsg == undefined) FailMsg = "failed"

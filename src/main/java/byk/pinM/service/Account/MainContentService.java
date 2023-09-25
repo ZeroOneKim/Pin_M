@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
  * @author yikim
  * @version 1.0
  */
-
 @Service
 public class MainContentService {
     @Autowired

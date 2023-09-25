@@ -1,6 +1,6 @@
 package byk.pinM.service;
 
-import byk.pinM.entity.Account.SignUpResponse;
+import byk.pinM.entity.Account.get.SignUpResponse;
 import byk.pinM.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
