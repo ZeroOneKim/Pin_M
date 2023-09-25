@@ -13,7 +13,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 
+/**
+ * 회원가입 관련 컨트롤러.
+ * @author yikim
+ * @version 1.0
+ * @Date : 2023-09-25 최종수정.
+ */
 @Controller
 public class SignUpController {
     private static final Logger logger = LogManager.getLogger("클래스 Log] " + SignUpController.class);
@@ -25,44 +32,51 @@ public class SignUpController {
     @Autowired private AccountJpaService accountJpaService;
     @Autowired private SignUpResponseValid signUpResponseValid;
 
-
+    //회원 가입 뷰 페이지
     @GetMapping("/signUp")
     public String signUpForm(Model model) {
         model.addAttribute("SignUpResponse", new SignUpResponse());
-
         return "account/signUp";
     }
-    //이메일 전송
+
+    /**
+     * 해당 이메일에 검증을 위한 난수의 비밀번호 값을 보낸다.
+     * @param email : 가입하고자 하는 유저의 Email
+     */
     @PostMapping("/signUpEmailChk")
     @ResponseBody
     public void emailChk_Process(@RequestParam("data") String email) {
-        System.out.println(email + "에게 메시지 전송 준비");
-        signUpEmailChk.sendEmailAndGenerateRandomNumber(email); //Send Email
+        signUpEmailChk.sendEmailAndGenerateRandomNumber(email);
     }
-    //이메일 확인
+
+    /**
+     * 해당 이메일에 보낸 비밀번호값과 일치하는지 확인한다.
+     * @param email
+     * @param validNum
+     */
     @PostMapping("/signUpEmailChkWithNum")
     @ResponseBody
     public void emailNumberChk_Process(@RequestParam("data") String email, @RequestParam("data2") String validNum) {
-        System.out.println(email + "   " + validNum);
         isEmailCheck = emailAndVerificationCode.isValidCheckCode(email, validNum);
-        System.out.println("이메일 인증 상태 : " + isEmailCheck); //TODO True or False 회원가입 이전에 체킹
     }
 
-    //회원가입 버튼
+    /**
+     * 모든 정보를 입력 후 회원가입 신청을 한다.
+     * @param signUpResponse : 회원가입 정보 Form
+     * @param errors : error Message
+     * Annotation : @Valid - 유효성 검사
+     */
     @PostMapping("/signUp_Process")
-    public String signUpResponse(@ModelAttribute SignUpResponse signUpResponse, Errors errors) { //TODO Error Code 작성 필요.
+    public String signUpResponse(@Valid @ModelAttribute SignUpResponse signUpResponse, Errors errors) { //TODO Error Code 작성 필요.
         if(errors.hasErrors()) {
             return "account/signUp";
         }
         signUpResponseValid.validate(signUpResponse, errors);
         if(errors.hasErrors()) {
-            System.out.println("failed");
-
-            System.out.println("ERROR STATUS(값 체크) : " + errors.hasErrors());
             return "account/signUp";
         }
-
-        if(isEmailCheck) { //후에 ! 붙여 검증.
+        //이메일 체크 실패 시.
+        if(!isEmailCheck) {
             return "account/signUp";
         }
 
