@@ -1,10 +1,12 @@
 package byk.pinM.controller.content.profile;
 
 import byk.pinM.entity.Account.User;
+import byk.pinM.entity.Account.get.PasswordUpdate;
 import byk.pinM.entity.Account.get.Profile;
 import byk.pinM.repository.AccountRepository;
 import byk.pinM.service.Account.AccountJpaService;
 import byk.pinM.service.Account.MainContentService;
+import byk.pinM.service.profile.PasswordUpdateValid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.Optional;
@@ -27,6 +30,7 @@ public class ProfileController {
     @Autowired private MainContentService mainContentService;
     @Autowired private AccountRepository accountRepository;
     @Autowired private AccountJpaService accountJpaService;
+    @Autowired private PasswordUpdateValid passwordUpdateValid;
 
     @GetMapping("/content/profile")
     public String profileForm(Model model) {
@@ -60,7 +64,33 @@ public class ProfileController {
     }
 
     @GetMapping("/content/password")
-    public String passwordPage() {
+    public String passwordPage(Model model) {
+        model.addAttribute("nickname", mainContentService.getUserNickname());
+        model.addAttribute(new PasswordUpdate());
+
         return "content/password";
     }
+
+    @PostMapping("/content/passwordUpdate")
+    public String passwordUpdate(@Valid PasswordUpdate passwordUpdate, Errors errors,
+                                 Model model, RedirectAttributes redirectAttributes) {
+        Optional<User> oUser = accountRepository.findById(SecurityContextHolder.getContext().getAuthentication().getName());
+        //if(errors.hasErrors()) { return "redirect:/content"; }
+        passwordUpdateValid.validate(passwordUpdate, errors);
+        if(errors.hasErrors()) {
+            redirectAttributes.addFlashAttribute("afterMessage", "패스워드 변경 실패 - 8자 이상의 비밀번호를 입력하세요.");
+            return "redirect:/content/password";
+        }
+        //TODO 이전패스워드
+        accountJpaService.updatePassword(passwordUpdate.getNewPassword()); // 비밀번호 변경
+        SecurityContextHolder.clearContext(); //로그인 정보 clear
+        redirectAttributes.addFlashAttribute("afterMessage", "패스워드 변경 완료(재로그인이 필요합니다.)");
+        return "redirect:/";
+    }
+
+
+
+
+
+
 }
