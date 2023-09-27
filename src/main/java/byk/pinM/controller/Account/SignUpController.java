@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -67,21 +68,24 @@ public class SignUpController {
      * Annotation : @Valid - 유효성 검사
      */
     @PostMapping("/signUp_Process")
-    public String signUpResponse(@Valid @ModelAttribute SignUpResponse signUpResponse, Errors errors) { //TODO Error Code 작성 필요.
+    public String signUpResponse(@Valid @ModelAttribute SignUpResponse signUpResponse, Errors errors, RedirectAttributes redirectAttributes) {
         if(errors.hasErrors()) {
-            return "account/signUp";
+            return "redirect:/signUp";
         }
         signUpResponseValid.validate(signUpResponse, errors);
         if(errors.hasErrors()) {
-            return "account/signUp";
+            String strErrCode = errors.getFieldError("errCode").getDefaultMessage();
+            redirectAttributes.addFlashAttribute("afterMessage", strErrCode);
+            return "redirect:/signUp";
         }
         //이메일 체크 실패 시.
         if(!isEmailCheck) {
-            return "account/signUp";
+            redirectAttributes.addFlashAttribute("afterMessage", "이메일 인증이 되지 않았습니다.");
+            return "redirect:/signUp";
         }
 
         accountJpaService.SignUpExecute(signUpResponse);
-
+        redirectAttributes.addFlashAttribute("afterMessage", "가입 완료.");
         return "redirect:/";
     }
 
