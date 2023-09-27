@@ -23,32 +23,27 @@ public class SignUpResponseValid implements Validator {
         SignUpResponse signUpResponse = (SignUpResponse)target;
 
         if(accountRepository.existsById(signUpResponse.getUser_id())) {
-            errors.rejectValue("user_id", "[error] already Used : User_Id"
-                    , new Object[]{signUpResponse.getUser_id()}, "이미 사용중인 아이디 입니다.");
-        }else if(signUpResponse.getUser_id().length() <= 4  && signUpResponse.getUser_id().length() > 16) {
-            errors.rejectValue("user_id", "[error] invalid length --- User_Id"
-                    , new Object[]{signUpResponse.getUser_id()}, "아이디의 길이가 적합하지 않습니다.");
-            System.out.println("아이디 오류");
+            errors.rejectValue("errCode", "[error] already Used : User_Id"
+                    , "이미 사용중인 아이디 입니다.");
+        }else if(signUpResponse.getUser_id().length() <= 4  || signUpResponse.getUser_id().length() > 16) {
+            errors.rejectValue("errCode", "[error] invalid length --- User_Id"
+                    ,  "아이디의 길이가 적합하지 않습니다.");
         }
 
         if(accountRepository.existsByNickname(signUpResponse.getNickname())) {
-            errors.rejectValue("nickname", "[error] already Used : NickName"
-                    , new Object[]{signUpResponse.getNickname()}, "이미 사용중인 닉네임 입니다.");
-        }else if(signUpResponse.getNickname().length() <= 2 && signUpResponse.getNickname().length() > 16) {
-            errors.rejectValue("nickname", "[error] invalid length --- NickName"
-                    , new Object[]{signUpResponse.getNickname()}, "닉네임의 길이가 적합하지 않습니다.");
-            System.out.println("닉네임");
+            errors.rejectValue("errCode", "[error] already Used : NickName"
+                    ,  "이미 사용중인 닉네임 입니다.");
+        }else if(signUpResponse.getNickname().length() <= 2 || signUpResponse.getNickname().length() > 16) {
+            errors.rejectValue("errCode", "[error] invalid length --- NickName"
+                    ,  "닉네임의 길이가 적합하지 않습니다.");
         }
 
         if(!signUpResponse.getPassword().matches("^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$")) {
-            errors.rejectValue("password", "[error] 유효하지않은 비밀번호입니다.");
-            System.out.println("비밀번호 오류");
+            errors.rejectValue("errCode", "[error] invalid Pattern --- Password"
+                    ,  "[error] 유효하지않은 비밀번호입니다.");
         } else if(!signUpResponse.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
-            errors.rejectValue("email", "[error] 이메일을 확인해 주세요.");
-            System.out.println("비밀번호 오류");
+            errors.rejectValue("errCode", "[error] invalid Pattern --- email"
+                    , "[error] 이메일을 확인해 주세요.");
         }
-
-
-
     }
 }
