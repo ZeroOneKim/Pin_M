@@ -73,4 +73,15 @@ public class SignUpResponse {
     public void setAddress2(String address2) {
         this.address2 = address2;
     }
+
+
+
+    private String errCode;
+    public String getErrCode() {
+        return errCode;
+    }
+    public void setErrCode(String errCode) {
+        this.errCode = errCode;
+    }
+
 }
