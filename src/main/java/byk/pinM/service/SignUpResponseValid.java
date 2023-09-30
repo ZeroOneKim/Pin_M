@@ -7,6 +7,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+/**
+ * 회원가입중, validate 적합성 체크 후 메시지 return
+ * @author : yikim
+ * @version 1.0
+ * @Date : 2023-09-28 최종 수정.
+ */
 @Component
 public class SignUpResponseValid implements Validator {
     @Autowired private AccountRepository accountRepository;
@@ -19,7 +25,6 @@ public class SignUpResponseValid implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        //TODO password, email, email_chk, phone, address, address2    // errors 사용하는법.
         SignUpResponse signUpResponse = (SignUpResponse)target;
 
         if(accountRepository.existsById(signUpResponse.getUser_id())) {
