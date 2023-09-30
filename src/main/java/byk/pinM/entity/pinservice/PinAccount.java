@@ -26,5 +26,30 @@ public class PinAccount {
     public String getBank_userNm() { return bank_userNm; }
     public void setBank_userNm(String bank_userNm) { this.bank_userNm = bank_userNm; }
 
+    //Builder Pattern
+    public static class PinAccountBuilder {
+        private PinAccount pinAccount = new PinAccount();
+        public PinAccountBuilder user_id(String user_id) {
+            pinAccount.setUser_id(user_id);
+            return this;
+        }
+        public PinAccountBuilder accountNum(String accountnum) {
+            pinAccount.setAccountnum(accountnum);
+            return this;
+        }
+        public PinAccountBuilder bank_nm(String bank_nm) {
+            pinAccount.setBank_nm((bank_nm));
+            return this;
+        }
+        public PinAccountBuilder bank_userNm(String bank_userNm) {
+            pinAccount.setBank_nm(bank_userNm);
+            return this;
+        }
 
+        public PinAccount build() { return pinAccount; }
+    }
+
+    public static PinAccountBuilder builder() {
+        return new PinAccountBuilder();
+    }
 }
