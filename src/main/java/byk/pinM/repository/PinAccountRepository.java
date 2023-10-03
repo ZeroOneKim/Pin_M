@@ -4,7 +4,7 @@ import byk.pinM.entity.pinservice.PinAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface pinAccountRepository extends JpaRepository<PinAccount, String> {
-
+public interface PinAccountRepository extends JpaRepository<PinAccount, String> {
+    boolean existsById(String id);
 
 }
