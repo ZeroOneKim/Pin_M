@@ -44,7 +44,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder())
                 .usersByUsernameQuery("SELECT USER_ID, PASSWORD, 1 FROM SY_USER_MT WHERE USER_ID = ?")
-                .authoritiesByUsernameQuery("SELECT USER_ID, 'ADMIN' FROM SY_USER_MT WHERE USER_ID = ?");
+                .authoritiesByUsernameQuery("SELECT A.USER_ID, B.ROLE_NM FROM SY_USER_MT A, SY_USER_GRP_MP B " +
+                                            " WHERE USER_ID = ? AND A.ROLE_ID = B.ROLE_ID");
     }
 
     //static 폴더 하위는 모두 접근가능 ex) css/ js ....
