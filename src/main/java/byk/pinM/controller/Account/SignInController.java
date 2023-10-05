@@ -1,5 +1,6 @@
 package byk.pinM.controller.Account;
 
+import byk.pinM.service.PinService.CrawlingWeatherService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,11 @@ public class SignInController {
     private static final Logger logger = LogManager.getLogger("클래스 : " + SignInController.class);
 
     @Autowired private AuthenticationManager authenticationManager;
-
+    @Autowired private CrawlingWeatherService crawlingWeatherService;
     @GetMapping("/signIn")
     public String signIn(Model model) {
         logger.info("\n try - SignIn 시도 \n");
+        System.out.println(crawlingWeatherService.tomo_AMPM_Temperature());
         return "account/signIn";
     }
 

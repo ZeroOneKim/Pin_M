@@ -15,7 +15,7 @@ public class PinMoneyJpaService {
     @Autowired private PinAccountRepository pinAccountRepository;
     @Autowired private AccountRepository accountRepository;
 
-    public void PinAccountRegist(PinAccount pinAccount) {
+    public void pinAccountRegist(PinAccount pinAccount) {
         pinAccount.setUser_id(SecurityContextHolder.getContext().getAuthentication().getName());
         pinAccountRepository.save(pinAccount);
 

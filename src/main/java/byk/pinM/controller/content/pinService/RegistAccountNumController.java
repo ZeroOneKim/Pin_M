@@ -18,7 +18,7 @@ public class RegistAccountNumController {
     @Autowired private MainContentService mainContentService;
 
     @GetMapping("/content/registAccount")
-    public String RegistAccountView(Model model) {
+    public String registAccountView(Model model) {
         model.addAttribute("nickname", mainContentService.getUserNickname());
         if(!pinAccountRepository.existsById(SecurityContextHolder.getContext().getAuthentication().getName())) {
             model.addAttribute("pinaccount", new PinAccount());
@@ -28,8 +28,8 @@ public class RegistAccountNumController {
     }
 
     @PostMapping("/content/registAccount-process")
-    public String RegistAccountProcess(PinAccount pinAccount) {
-        pinMoneyJpaService.PinAccountRegist(pinAccount);
+    public String registAccountProcess(PinAccount pinAccount) {
+        pinMoneyJpaService.pinAccountRegist(pinAccount);
 
         return "redirect:/content";
     }

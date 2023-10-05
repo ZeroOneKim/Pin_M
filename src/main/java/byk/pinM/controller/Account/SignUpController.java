@@ -84,7 +84,7 @@ public class SignUpController {
             return "redirect:/signUp";
         }
 
-        accountJpaService.SignUpExecute(signUpResponse);
+        accountJpaService.signUpExecute(signUpResponse);
         redirectAttributes.addFlashAttribute("afterMessage", "가입 완료.");
         return "redirect:/";
     }

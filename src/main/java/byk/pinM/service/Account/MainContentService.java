@@ -18,7 +18,7 @@ public class MainContentService {
         String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
         String query = "select nickname from User where user_id = '" + user_id + "'";
 
-        String res = jpaQueryService.SimpleSelectTable(query);
+        String res = jpaQueryService.simpleSelectTable(query);
         return res;
     }
 

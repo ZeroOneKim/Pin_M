@@ -17,7 +17,7 @@ public class EmailAndVerificationCode {
 
     public void setEmailMapping(String email, String code) {
         this.emailMapping.put(email, code);
-        RemoveEmailMappingCode(email);
+        removeEmailMappingCode(email);
     }
 
     public boolean isValidCheckCode(String email, String password) {
@@ -26,7 +26,7 @@ public class EmailAndVerificationCode {
         return false;
     }
 
-    private void RemoveEmailMappingCode(String willRemoveEmail) {
+    private void removeEmailMappingCode(String willRemoveEmail) {
         ScheduledFuture<?> already = scheduler.schedule(() -> removeProcess(willRemoveEmail)
                                                               , 5
                                                               , TimeUnit.MINUTES);

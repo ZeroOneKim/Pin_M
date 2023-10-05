@@ -32,7 +32,7 @@ public class AccountJpaService {
      * 회원가입 실행 메서드.
      * @param signUpResponse : 저장 전 회원 정보 입력할 파라미터 정보
      */
-    public void SignUpExecute(SignUpResponse signUpResponse) {
+    public void signUpExecute(SignUpResponse signUpResponse) {
         User user = User.builder()
                 .user_id(signUpResponse.getUser_id())
                 .nickname(signUpResponse.getNickname())

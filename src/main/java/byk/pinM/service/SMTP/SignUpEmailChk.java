@@ -22,13 +22,13 @@ public class SignUpEmailChk {
 
     public void sendEmailAndGenerateRandomNumber(String chkEmail_Id) {
         if (!chkEmail_Id.equals("")) {
-            String val = RandomNumber();
+            String val = randomNumber();
             mailSenderSMTP.sendEmailforSignUp(chkEmail_Id, val);
             emailAndVerificationCode.setEmailMapping(chkEmail_Id, val);
         }
     }
 
-    String RandomNumber() {
+    String randomNumber() {
         Random random = new Random();
         int intAnswer = random.nextInt(8999)+1000;
         String answer = String.valueOf(intAnswer);

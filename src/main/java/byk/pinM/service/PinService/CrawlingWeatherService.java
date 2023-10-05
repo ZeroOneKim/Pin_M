@@ -10,7 +10,7 @@ import org.jsoup.select.Elements;
 @Service
 public class CrawlingWeatherService {
 
-    public String Tomo_AMPM_Temperature() {
+    public String tomo_AMPM_Temperature() {
         String URL = "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=%EC%A0%84%EA%B5%AD%EB%82%A0%EC%94%A8";
         String answer = "";
         try {
@@ -27,7 +27,7 @@ public class CrawlingWeatherService {
         }
         return answer;
     }
-    public String TomoRain_per() {
+    public String tomoRain_per() {
         String URL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=%EC%84%9C%EC%9A%B8%20%EB%82%A0%EC%94%A8";
         String answer = "";
         try {
