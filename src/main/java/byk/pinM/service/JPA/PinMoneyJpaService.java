@@ -1,4 +1,4 @@
-package byk.pinM.service.PinService;
+package byk.pinM.service.JPA;
 
 import byk.pinM.entity.Account.User;
 import byk.pinM.entity.pinservice.PinAccount;

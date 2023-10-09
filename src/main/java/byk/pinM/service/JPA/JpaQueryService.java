@@ -1,4 +1,4 @@
-package byk.pinM.service.Account;
+package byk.pinM.service.JPA;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

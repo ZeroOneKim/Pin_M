@@ -1,4 +1,4 @@
-package byk.pinM.service.Account;
+package byk.pinM.service.JPA;
 
 import byk.pinM.entity.Account.get.PasswordUpdate;
 import byk.pinM.entity.Account.get.Profile;
