@@ -3,12 +3,12 @@ package byk.pinM.entity.pinservice;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class PinPointRecord {
+public class PinPointRecord implements Serializable {
     @Id
-    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date record_dt;
 
     @Id
