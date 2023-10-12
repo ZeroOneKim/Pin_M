@@ -4,7 +4,7 @@ import byk.pinM.entity.Account.User;
 import byk.pinM.entity.Account.get.PasswordUpdate;
 import byk.pinM.entity.Account.get.Profile;
 import byk.pinM.repository.AccountRepository;
-import byk.pinM.service.Account.AccountJpaService;
+import byk.pinM.service.JPA.AccountJpaService;
 import byk.pinM.service.Account.MainContentService;
 import byk.pinM.service.profile.PasswordUpdateValid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,8 +53,6 @@ public class ProfileController {
     public String profileUpdate(@Valid @ModelAttribute Profile profile, Errors errors, Model model) {
         if(errors.hasErrors()) {
             model.addAttribute(profile);
-            System.out.println("오류 발견");
-            System.out.println(errors);
             return "content/profile";
         }
 
