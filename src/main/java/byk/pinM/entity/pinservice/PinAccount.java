@@ -3,8 +3,10 @@ package byk.pinM.entity.pinservice;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "PIN_ACCOUNT_MT")
 public class PinAccount {
     @Id
     @Column(unique = true)
