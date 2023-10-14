@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "PIN_POINT_RECORD_MT")
+@Table(name = "PIN_PT_RECORD_MT")
 public class PinPointRecord implements Serializable {
     @Id
     private Date record_dt;
