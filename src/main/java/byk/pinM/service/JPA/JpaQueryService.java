@@ -15,15 +15,19 @@ public class JpaQueryService {
     @Autowired private EntityManager entityManager;
 
     /**
-     * 쿼리 실행 결과를 String 형태로 단일 값 목적으로 return 한다.
+     * 쿼리 실행 결과를 단일 형태의 출력을 목적으로 return 한다.
+     * @Method : simpleSelectTable : String 단일 값
+     *           simpleIntSelectTable : int 단일 값
      * @param query : 실행될 쿼리.
      */
     public String simpleSelectTable(String query) {
         String queryExe = entityManager.createQuery(query, String.class).getSingleResult();
-
         return queryExe;
     }
-
+    public int simpleIntSelectTable(String query) {
+        int queryExe = entityManager.createQuery(query, Integer.class).getSingleResult();
+        return queryExe;
+    }
 
 
 
