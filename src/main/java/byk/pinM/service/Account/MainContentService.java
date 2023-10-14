@@ -9,6 +9,7 @@ import java.util.Map;
 
 /**
  * MainContent Page에서 사용할 DB정보 및 데이터를 가져옴.
+ * 유저 입력을 받는 것이 아닌, Query 입력값을 통으로 가져가는 완성된 쿼리만을 취급한다.(SQL Injection 방지)
  * @author yikim
  * @version 1.0
  */
@@ -29,5 +30,15 @@ public class MainContentService {
         return res;
     }
 
+    /**
+     * 보상금 관련 데이터를 가져온다.
+     * @param number : Mission version
+     * @return price : 보상금
+     */
+    public int getPriceByMission(int number) {
+        String query = "select price FROM PinMission WHERE mission_id = '" + number +"'";
+        int res = jpaQueryService.simpleIntSelectTable(query);
 
+        return res;
+    }
 }
