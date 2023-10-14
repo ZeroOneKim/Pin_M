@@ -1,13 +1,13 @@
 package byk.pinM.entity.pinservice;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "PIN_MISSION_MT")
 public class PinMission {
     @Id
-    @Column(unique = true)
     private int mission_id;
 
     private String mission_nm;
@@ -21,6 +21,7 @@ public class PinMission {
 
     public int getPrice() { return price; }
     public void setPrice(int price) { this.price = price; }
+
 
     public static class PinMissionBuilder {
         private PinMission pinMission = new PinMission();
@@ -39,6 +40,6 @@ public class PinMission {
         public PinMission build() {
             return pinMission;
         }
-        public static PinMissionBuilder builder() { return new PinMissionBuilder(); }
     }
+    public static PinMissionBuilder builder() { return new PinMissionBuilder(); }
 }

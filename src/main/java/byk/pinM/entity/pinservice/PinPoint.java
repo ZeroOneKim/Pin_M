@@ -3,8 +3,10 @@ package byk.pinM.entity.pinservice;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "PIN_POINT_MT")
 public class PinPoint {
     @Id
     @Column(unique = true)
@@ -39,6 +41,9 @@ public class PinPoint {
         public PinPoint build() {
             return pinPoint;
         }
-        public static pinPointBuilder builder() { return new pinPointBuilder(); }
+    }
+
+    public static pinPointBuilder builder() {
+        return new pinPointBuilder();
     }
 }
