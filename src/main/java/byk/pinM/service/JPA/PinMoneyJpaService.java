@@ -2,8 +2,10 @@ package byk.pinM.service.JPA;
 
 import byk.pinM.entity.Account.User;
 import byk.pinM.entity.pinservice.PinAccount;
+import byk.pinM.entity.pinservice.PinPoint;
 import byk.pinM.repository.AccountRepository;
 import byk.pinM.repository.PinAccountRepository;
+import byk.pinM.repository.PinPointRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -20,9 +22,10 @@ import java.util.Optional;
 public class PinMoneyJpaService {
     @Autowired private PinAccountRepository pinAccountRepository; //계좌 레퍼지토리
     @Autowired private AccountRepository accountRepository; //계정 레퍼지토리
+    @Autowired private PinPointRepository pinPointRepository;
 
     /**
-     * 계좌 등록정보를 받은 후 계좌 생성, 계정 정보의 권한 변경
+     * 계좌 등록정보를 받은 후 계좌 생성, 계정 정보의 권한 변경, PinPoint 관련 DB정보 생성
      * @param pinAccount : 계정정보
      */
     public void pinAccountRegist(PinAccount pinAccount) {
@@ -32,10 +35,18 @@ public class PinMoneyJpaService {
         Optional<User> oUser = accountRepository.findById(SecurityContextHolder.getContext().getAuthentication().getName());
         oUser.get().setRole_id(2);
         accountRepository.save(oUser.get());
+
+        PinPoint pinPoint = PinPoint.builder()
+                .user_id(SecurityContextHolder.getContext().getAuthentication().getName())
+                .pin_point(0)
+                .use_point(0).build();
+        pinPointRepository.save(pinPoint);
     }
+
 
     public void weatherCheck() {
         String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
+
 
         //TODO   will make Query service
     }
