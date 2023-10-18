@@ -54,6 +54,7 @@ public class MainContentService {
     /**
      * 미션 종류에 따른 포인트 적립 메서드.
      * @param missionNum : 미션넘버
+     *        missionNum 1 : 날씨 관련 체크
      */
     public void WeatherChkSuccess(int missionNum) {
         int price = mainContentService.getPriceByMission(missionNum); //미션 버전에따른 보상금
