@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
+import java.sql.Timestamp;
 import java.util.Optional;
 
 /**
@@ -23,7 +23,6 @@ import java.util.Optional;
 @Service
 public class MainContentService {
     @Autowired private JpaQueryService jpaQueryService;
-    @Autowired private MainContentService mainContentService;
     @Autowired private PinPointRecordRepository pinPointRecordRepository;
     @Autowired private PinPointRepository pinPointRepository;
 
@@ -57,18 +56,25 @@ public class MainContentService {
      *        missionNum 1 : 날씨 관련 체크
      */
     public void WeatherChkSuccess(int missionNum) {
-        int price = mainContentService.getPriceByMission(missionNum); //미션 버전에따른 보상금
+        try {
+            int price = getPriceByMission(missionNum); //미션 버전에따른 보상금
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-        PinPointRecord checkingWeather = PinPointRecord.builder()
-                .user_id(SecurityContextHolder.getContext().getAuthentication().getName())
-                .mission_id(1).price(price)
-                .build();
-        pinPointRecordRepository.save(checkingWeather);
+            PinPointRecord checkingWeather = PinPointRecord.builder()
+                    .user_id(SecurityContextHolder.getContext().getAuthentication().getName())
+                    .time(timestamp)
+                    .mission_id(1).price(price)
+                    .build();
+            pinPointRecordRepository.save(checkingWeather);
 
-        Optional<PinPoint> objPoint = pinPointRepository.findById(SecurityContextHolder.getContext().getAuthentication().getName());
+            Optional<PinPoint> objPoint = pinPointRepository.findById(SecurityContextHolder.getContext().getAuthentication().getName());
 
-        int newPoint = objPoint.get().getPin_point() + price;
-        objPoint.get().setPin_point(newPoint); //기존 포인트 + 보상 포인트
-        pinPointRepository.save(objPoint.get());
+            int newPoint = objPoint.get().getPin_point() + price;
+            objPoint.get().setPin_point(newPoint); //기존 포인트 + 보상 포인트
+            pinPointRepository.save(objPoint.get());
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("ERR");
+        }
     }
 }
