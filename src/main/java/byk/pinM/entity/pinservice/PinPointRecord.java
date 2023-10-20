@@ -2,7 +2,7 @@ package byk.pinM.entity.pinservice;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "PIN_PT_RECORD_MT")
@@ -12,14 +12,13 @@ public class PinPointRecord implements Serializable {
     private String user_id;
 
     @Id
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date record_dt;
+    private Timestamp record_dt;
 
     private int mission_id;
     private int price;
 
-    public Date getRecord_dt() { return record_dt; }
-    public void setRecord_dt(Date record_dt) { this.record_dt = record_dt; }
+    public Timestamp getRecord_dt() { return record_dt; }
+    public void setRecord_dt(Timestamp record_dt) { this.record_dt = record_dt; }
 
     public String getUser_id() { return user_id; }
     public void setUser_id(String user_id) { this.user_id = user_id; }
@@ -36,7 +35,7 @@ public class PinPointRecord implements Serializable {
             pinPointRecord.setUser_id(user_id);
             return this;
         }
-        public PinPointRecordBuilder time(Date time) {
+        public PinPointRecordBuilder time(Timestamp time) {
             pinPointRecord.setRecord_dt(time);
             return this;
         }
