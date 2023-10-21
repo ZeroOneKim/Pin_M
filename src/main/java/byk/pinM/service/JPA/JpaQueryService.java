@@ -1,9 +1,13 @@
 package byk.pinM.service.JPA;
 
+import byk.pinM.controller.Account.SignInController;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
 /**
  * JPA/ JPQL 관련 쿼리 실행 메서드
@@ -12,6 +16,7 @@ import javax.persistence.EntityManager;
  */
 @Service
 public class JpaQueryService {
+    private static final Logger logger = LogManager.getLogger("클래스 ERR] : " + JpaQueryService.class);
     @Autowired private EntityManager entityManager;
 
     /**
@@ -20,11 +25,22 @@ public class JpaQueryService {
      *           simpleIntSelectTable : int 단일 값
      * @param query : 실행될 쿼리.
      */
-    public String simpleSelectTable(String query) {
-        String queryExe = entityManager.createQuery(query, String.class).getSingleResult();
-        return queryExe;
+    public String simpleSelectTable(String query) throws NoResultException {
+        try {
+            String queryExe = entityManager.createQuery(query, String.class).getSingleResult();
+            if (queryExe.isEmpty()) {
+                queryExe = "";
+            }
+            return queryExe;
+        } catch (NoResultException e) {
+            return "";
+        } catch (Exception e) {
+            logger.error(e);
+            throw e;
+        }
     }
-    public int simpleIntSelectTable(String query) {
+
+    public int simpleIntSelectTable(String query) throws NoResultException {
         int queryExe = entityManager.createQuery(query, Integer.class).getSingleResult();
         return queryExe;
     }
