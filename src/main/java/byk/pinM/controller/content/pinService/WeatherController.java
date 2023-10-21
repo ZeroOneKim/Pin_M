@@ -10,8 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -32,14 +32,22 @@ public class WeatherController {
         model.addAttribute("PM", ampm_temperature.get(1));
         model.addAttribute("weatherData", tomorrowWeatherInfo);
 
+        mainContentService.getTimePinRecord();
+
         return "content/weather";
     }
+    
+    @PostMapping("/check-weather")
+    public String weatherCheck(RedirectAttributes redirectAttributes) {
+        Boolean todayChk = mainContentService.getTimePinRecord();
 
-    //TODO 도중에 여러번 실행되면?
-    @PostMapping("/check-weather") //미완
-    public String weatherCheck() {
+        if(!todayChk) {
+            mainContentService.WeatherChkSuccess(1); //적립 처리
+            redirectAttributes.addFlashAttribute("Message", "적립되었습니다.");
+        } else {
+            redirectAttributes.addFlashAttribute("Message", "오늘은 이미 적립하였습니다.");
+        }
 
-        mainContentService.WeatherChkSuccess(1);
 
         return "redirect:/content/weather";
     }
