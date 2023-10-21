@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -18,37 +21,14 @@ import java.util.Optional;
  * @author yikim
  * @version 1.1
  * @Date 2023-09-26 : 최초작성
- *       2023-10-18 : 최종작성
+ *       2023-10-21 : 최종작성
  */
 @Service
 public class MainContentService {
     @Autowired private JpaQueryService jpaQueryService;
     @Autowired private PinPointRecordRepository pinPointRecordRepository;
     @Autowired private PinPointRepository pinPointRepository;
-
-    /**
-     * 현재 사용중인 사용자의 Nickname을 가져온다.
-     * @return Nickname : 유저 닉네임
-     */
-    public String getUserNickname() {
-        String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
-        String query = "select nickname from User where user_id = '" + user_id + "'";
-
-        String res = jpaQueryService.simpleSelectTable(query);
-        return res;
-    }
-
-    /**
-     * 보상금 관련 데이터를 가져온다.
-     * @param number : Mission version
-     * @return price : 보상금
-     */
-    public int getPriceByMission(int number) {
-        String query = "select price FROM PinMission WHERE mission_id = '" + number +"'";
-        int res = jpaQueryService.simpleIntSelectTable(query);
-
-        return res;
-    }
+    @Autowired private EntityManager entityManager;
 
     /**
      * 미션 종류에 따른 포인트 적립 메서드.
@@ -76,5 +56,53 @@ public class MainContentService {
             e.printStackTrace();
             System.out.println("ERR");
         }
+    }
+
+
+
+    // ======================================================= 재사용 가능 간단 쿼리문 ====================================================
+    /**
+     * 현재 사용중인 사용자의 Nickname을 가져온다.
+     * @return Nickname : 유저 닉네임
+     */
+    public String getUserNickname() {
+        String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
+        String query = "select nickname from User where user_id = '" + user_id + "'";
+
+        String res = jpaQueryService.simpleSelectTable(query);
+        return res;
+    }
+
+    /**
+     * 보상금 관련 데이터를 가져온다.
+     * @param number : Mission version
+     * @return price : 보상금
+     */
+    public int getPriceByMission(int number) {
+        String query = "select price FROM PinMission WHERE mission_id = '" + number +"'";
+        int res = jpaQueryService.simpleIntSelectTable(query);
+
+        return res;
+    }
+
+    /**
+     * 오늘 적립 여부 확인
+     * @return res : 여부 true/false
+     */
+    public Boolean getTimePinRecord() {
+        Boolean res = true;
+
+        Date now = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String today = df.format(now);
+        String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
+        String query = "SELECT user_id FROM PinPointRecord WHERE user_id = '" + user_id + "' AND record_dt LIKE '"+ today +"%'";
+
+        String stringRes = jpaQueryService.simpleSelectTable(query);
+        if(stringRes.equals("") || stringRes.isEmpty() || stringRes == null) {
+            res = false;
+        }
+
+        return res;
     }
 }
