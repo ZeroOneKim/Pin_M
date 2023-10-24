@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "PIN_ACCOUNT_MT")
+@Table(name = "PIN_ACCOUNT")
 public class PinAccount {
     @Id
     @Column(unique = true)
