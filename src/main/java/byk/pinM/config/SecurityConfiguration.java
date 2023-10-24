@@ -27,7 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests() //TODO csrf 방어 추가
+        http.authorizeRequests()
                     .mvcMatchers("/", "/imgs/*", "/signUp","/signUpEmailChk","/signUp_Process", "/signUpEmailChkWithNum","/signIn-process")
                     .permitAll()
                     .anyRequest().authenticated()
@@ -36,6 +36,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                     .logout().permitAll()
                     .logoutSuccessUrl("/");
+
+        http.sessionManagement().maximumSessions(1)
+                .maxSessionsPreventsLogin(true);
 
     }
 
