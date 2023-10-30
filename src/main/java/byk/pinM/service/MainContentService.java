@@ -1,4 +1,4 @@
-package byk.pinM.service.Account;
+package byk.pinM.service;
 
 import byk.pinM.entity.pinservice.PinPoint;
 import byk.pinM.entity.pinservice.PinPointRecord;

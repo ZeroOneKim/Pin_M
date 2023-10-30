@@ -2,7 +2,7 @@ package byk.pinM.controller.content.pinService;
 
 import byk.pinM.entity.pinservice.PinAccount;
 import byk.pinM.repository.PinAccountRepository;
-import byk.pinM.service.Account.MainContentService;
+import byk.pinM.service.MainContentService;
 import byk.pinM.service.JPA.PinMoneyJpaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -5,7 +5,7 @@ import byk.pinM.entity.Account.get.PasswordUpdate;
 import byk.pinM.entity.Account.get.Profile;
 import byk.pinM.repository.AccountRepository;
 import byk.pinM.service.JPA.AccountJpaService;
-import byk.pinM.service.Account.MainContentService;
+import byk.pinM.service.MainContentService;
 import byk.pinM.service.profile.PasswordUpdateValid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

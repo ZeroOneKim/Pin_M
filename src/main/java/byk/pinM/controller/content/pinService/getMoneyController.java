@@ -4,7 +4,7 @@ import byk.pinM.entity.pinservice.PinAccount;
 import byk.pinM.entity.pinservice.PinPoint;
 import byk.pinM.repository.AccountNumRepository;
 import byk.pinM.repository.PinPointRepository;
-import byk.pinM.service.Account.MainContentService;
+import byk.pinM.service.MainContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;

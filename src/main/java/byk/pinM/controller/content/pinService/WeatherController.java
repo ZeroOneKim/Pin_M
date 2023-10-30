@@ -2,7 +2,7 @@ package byk.pinM.controller.content.pinService;
 
 import byk.pinM.repository.PinPointRecordRepository;
 import byk.pinM.repository.PinPointRepository;
-import byk.pinM.service.Account.MainContentService;
+import byk.pinM.service.MainContentService;
 import byk.pinM.service.JPA.JpaQueryService;
 import byk.pinM.service.PinService.CrawlingWeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
