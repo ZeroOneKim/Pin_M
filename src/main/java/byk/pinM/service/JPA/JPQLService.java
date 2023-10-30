@@ -1,6 +1,5 @@
 package byk.pinM.service.JPA;
 
-import byk.pinM.controller.Account.SignInController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +9,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 
 /**
- * JPA/ JPQL 관련 쿼리 실행 메서드
+ * JPQL 관련 쿼리 실행 메서드
  * @author yikim
  * @version 1.0
  */
 @Service
-public class JpaQueryService {
-    private static final Logger logger = LogManager.getLogger("클래스 ERR] : " + JpaQueryService.class);
+public class JPQLService {
+    private static final Logger logger = LogManager.getLogger("클래스 ERR] : " + JPQLService.class);
     @Autowired private EntityManager entityManager;
 
     /**

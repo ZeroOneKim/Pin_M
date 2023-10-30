@@ -4,7 +4,7 @@ import byk.pinM.entity.pinservice.PinPoint;
 import byk.pinM.entity.pinservice.PinPointRecord;
 import byk.pinM.repository.PinPointRecordRepository;
 import byk.pinM.repository.PinPointRepository;
-import byk.pinM.service.JPA.JpaQueryService;
+import byk.pinM.service.JPA.JPQLService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ import java.util.Optional;
  */
 @Service
 public class MainContentService {
-    @Autowired private JpaQueryService jpaQueryService;
+    @Autowired private JPQLService JPQLService;
     @Autowired private PinPointRecordRepository pinPointRecordRepository;
     @Autowired private PinPointRepository pinPointRepository;
     @Autowired private EntityManager entityManager;
@@ -69,7 +69,7 @@ public class MainContentService {
         String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
         String query = "select nickname from User where user_id = '" + user_id + "'";
 
-        String res = jpaQueryService.simpleSelectTable(query);
+        String res = JPQLService.simpleSelectTable(query);
         return res;
     }
 
@@ -80,7 +80,7 @@ public class MainContentService {
      */
     public int getPriceByMission(int number) {
         String query = "select price FROM PinMission WHERE mission_id = '" + number +"'";
-        int res = jpaQueryService.simpleIntSelectTable(query);
+        int res = JPQLService.simpleIntSelectTable(query);
 
         return res;
     }
@@ -98,7 +98,7 @@ public class MainContentService {
         String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
         String query = "SELECT user_id FROM PinPointRecord WHERE user_id = '" + user_id + "' AND record_dt LIKE '"+ today +"%'";
 
-        String stringRes = jpaQueryService.simpleSelectTable(query);
+        String stringRes = JPQLService.simpleSelectTable(query);
         if(stringRes.equals("") || stringRes.isEmpty() || stringRes == null) {
             res = false;
         }

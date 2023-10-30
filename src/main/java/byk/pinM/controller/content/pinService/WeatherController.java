@@ -3,7 +3,7 @@ package byk.pinM.controller.content.pinService;
 import byk.pinM.repository.PinPointRecordRepository;
 import byk.pinM.repository.PinPointRepository;
 import byk.pinM.service.MainContentService;
-import byk.pinM.service.JPA.JpaQueryService;
+import byk.pinM.service.JPA.JPQLService;
 import byk.pinM.service.PinService.CrawlingWeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class WeatherController {
     @Autowired private CrawlingWeatherService crawlingWeatherService;
     @Autowired private MainContentService mainContentService;
-    @Autowired private JpaQueryService jpaQueryService;
+    @Autowired private JPQLService JPQLService;
     @Autowired private PinPointRecordRepository pinPointRecordRepository;
     @Autowired private PinPointRepository pinPointRepository;
 
