@@ -29,7 +29,8 @@ public class RegistAccountNumController {
 
     @PostMapping("/content/registAccount-process")
     public String registAccountProcess(PinAccount pinAccount) {
-        pinMoneyJpaService.pinAccountRegist(pinAccount);
+        String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
+        pinMoneyJpaService.pinAccountRegist(pinAccount, user_id);
 
         return "redirect:/content";
     }
