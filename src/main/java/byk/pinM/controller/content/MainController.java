@@ -2,7 +2,9 @@ package byk.pinM.controller.content;
 
 import byk.pinM.entity.pinservice.PinPoint;
 import byk.pinM.repository.PinPointRepository;
+import byk.pinM.service.JPA.PinMoneyJpaService;
 import byk.pinM.service.MainContentService;
+import byk.pinM.service.PinService.MyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,15 @@ import java.util.Optional;
 public class MainController {
     @Autowired private MainContentService mainContentService;
     @Autowired private PinPointRepository pinPointRepository;
+    @Autowired private PinMoneyJpaService pinMoneyJpaService;
+
+    @GetMapping("/")
+    public String indexPage() {
+        pinMoneyJpaService.addIpInformation(SecurityContextHolder.getContext().getAuthentication().getName(), "index");
+
+
+        return "/index";
+    }
 
     @GetMapping("/content")
     public String mainPage(Model model) {
