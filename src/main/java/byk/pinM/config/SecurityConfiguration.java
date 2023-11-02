@@ -1,5 +1,6 @@
 package byk.pinM.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,12 +19,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-    private DataSource dataSource;
-
-    public SecurityConfiguration(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+    @Autowired private DataSource dataSource;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -47,9 +43,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder())
-                .usersByUsernameQuery("SELECT USER_ID, PASSWORD, 1 FROM SY_USER_MT WHERE USER_ID = ?")
-                .authoritiesByUsernameQuery("SELECT A.USER_ID, B.ROLE_NM FROM SY_USER_MT A, SY_USER_GRP_MP B " +
-                                            " WHERE USER_ID = ? AND A.ROLE_ID = B.ROLE_ID");
+                .usersByUsernameQuery("SELECT user_id, password, 1 FROM sy_user_mt WHERE user_id = ?")
+                .authoritiesByUsernameQuery("SELECT A.user_id, B.role_nm FROM sy_user_mt A, sy_user_grp_mp B " +
+                                            " WHERE user_id = ? AND A.role_id = B.role_id");
     }
 
     //static 폴더 하위는 모두 접근가능 ex) css/ js ....
