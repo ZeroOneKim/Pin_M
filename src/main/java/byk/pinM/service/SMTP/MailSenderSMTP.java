@@ -26,4 +26,18 @@ public class MailSenderSMTP {
         javaMailSender.send(msg);
     }
 
+    public void sendEmailRequestMoney(String nickname, int requestPoint, String phone, String accountNum, String bankNm) {
+        SimpleMailMessage msg = new SimpleMailMessage();
+        System.out.println("Email 발송 : " + info.getNaverMailId());
+        msg.setTo(info.getNaverMailId());
+        msg.setSubject(info.getSmtpTitle());
+        msg.setText("PinMoney 요청드림.\n" +
+                    nickname + " 님이 포인트를 요청하였습니다.\n\n" +
+                    bankNm + "의 " + accountNum + " 으로 포인트 요청합니다.\n" +
+                    "요청금액 : " + requestPoint + "\n" +
+                    "요청자 핸드폰 번호 : " + phone);
+
+        javaMailSender.send(msg);
+    }
+
 }

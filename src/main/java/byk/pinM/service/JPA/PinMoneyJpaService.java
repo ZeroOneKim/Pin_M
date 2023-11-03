@@ -4,10 +4,8 @@ import byk.pinM.entity.Account.User;
 import byk.pinM.entity.Account.UserLog;
 import byk.pinM.entity.pinservice.PinAccount;
 import byk.pinM.entity.pinservice.PinPoint;
-import byk.pinM.repository.AccountRepository;
-import byk.pinM.repository.PinAccountRepository;
-import byk.pinM.repository.PinPointRepository;
-import byk.pinM.repository.UserLogRepository;
+import byk.pinM.entity.pinservice.PinPointSpend;
+import byk.pinM.repository.*;
 import byk.pinM.service.PinService.MyUtil;
 import org.hibernate.id.IdentifierGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +21,11 @@ import java.util.Optional;
  */
 @Service
 public class PinMoneyJpaService {
-    @Autowired private PinAccountRepository pinAccountRepository; //계좌 레퍼지토리
-    @Autowired private AccountRepository accountRepository; //계정 레퍼지토리
+    @Autowired private PinAccountRepository pinAccountRepository;
+    @Autowired private AccountRepository accountRepository;
     @Autowired private UserLogRepository userLogRepository;
     @Autowired private PinPointRepository pinPointRepository;
+    @Autowired private PinPointSpendRepository pinPointSpendRepository;
 
     /**
      * 계좌 등록정보를 받은 후 계좌 생성, 계정 정보의 권한 변경, PinPoint 관련 DB정보 생성
@@ -62,5 +61,22 @@ public class PinMoneyJpaService {
         userLog.setPage_nm(pageNm);
 
         //userLogRepository.save(userLog);
+    }
+
+    /**
+     * Point 사용시, 로그처리.
+     * @param user_id  : 유저ID
+     * @param usePoint : 사용한 Point
+     */
+    public void spendPointLog(String user_id, int usePoint) {
+        PinPointSpend spend = new PinPointSpend();
+
+        spend.setSpend_id(1L);
+        spend.setUser_id(user_id);
+        spend.setSpend_point(usePoint);
+        spend.setSpend_dt(new MyUtil().getTimeNow());
+
+        pinPointSpendRepository.save(spend);
+
     }
 }
