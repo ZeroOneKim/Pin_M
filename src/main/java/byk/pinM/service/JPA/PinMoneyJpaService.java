@@ -1,5 +1,6 @@
 package byk.pinM.service.JPA;
 
+import byk.pinM.config.mySecurityInfo;
 import byk.pinM.entity.Account.User;
 import byk.pinM.entity.Account.UserLog;
 import byk.pinM.entity.pinservice.PinAccount;
@@ -26,6 +27,7 @@ public class PinMoneyJpaService {
     @Autowired private UserLogRepository userLogRepository;
     @Autowired private PinPointRepository pinPointRepository;
     @Autowired private PinPointSpendRepository pinPointSpendRepository;
+    @Autowired private mySecurityInfo info;
 
     /**
      * 계좌 등록정보를 받은 후 계좌 생성, 계정 정보의 권한 변경, PinPoint 관련 DB정보 생성
@@ -60,7 +62,8 @@ public class PinMoneyJpaService {
         userLog.setAccess_dt(new MyUtil().getTimeNow());
         userLog.setPage_nm(pageNm);
 
-        userLogRepository.save(userLog);
+        if(!userLog.getIp_addr().equals(info.getNoLoggingIP())) userLogRepository.save(userLog);
+
     }
 
     /**
