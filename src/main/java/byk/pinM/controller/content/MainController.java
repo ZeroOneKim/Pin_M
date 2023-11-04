@@ -24,7 +24,7 @@ public class MainController {
         pinMoneyJpaService.addIpInformation(SecurityContextHolder.getContext().getAuthentication().getName(), "index");
 
 
-        return "/index";
+        return "index";
     }
 
     @GetMapping("/content")
