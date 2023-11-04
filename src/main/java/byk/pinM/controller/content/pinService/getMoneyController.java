@@ -45,7 +45,7 @@ public class getMoneyController {
         model.addAttribute("accountNum", pinAccount.get().getAccountnum());
         model.addAttribute("point", pinPoint.get().getPin_point());
 
-        return "/content/getMoney";
+        return "content/getMoney";
     }
 
     @PostMapping("/getmoney-process")
