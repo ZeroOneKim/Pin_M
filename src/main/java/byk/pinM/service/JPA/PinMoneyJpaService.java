@@ -60,7 +60,7 @@ public class PinMoneyJpaService {
         userLog.setAccess_dt(new MyUtil().getTimeNow());
         userLog.setPage_nm(pageNm);
 
-        //userLogRepository.save(userLog);
+        userLogRepository.save(userLog);
     }
 
     /**

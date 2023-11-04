@@ -2,12 +2,14 @@ package byk.pinM.controller.Account;
 
 import byk.pinM.entity.Account.get.SignUpResponse;
 import byk.pinM.service.JPA.AccountJpaService;
+import byk.pinM.service.JPA.PinMoneyJpaService;
 import byk.pinM.service.SMTP.EmailAndVerificationCode;
 import byk.pinM.service.SMTP.SignUpEmailChk;
 import byk.pinM.service.SignUpResponseValid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -32,10 +34,13 @@ public class SignUpController {
     @Autowired private EmailAndVerificationCode emailAndVerificationCode;
     @Autowired private AccountJpaService accountJpaService;
     @Autowired private SignUpResponseValid signUpResponseValid;
+    @Autowired private PinMoneyJpaService pinMoneyJpaService;
 
     //회원 가입 뷰 페이지
     @GetMapping("/signUp")
     public String signUpForm(Model model) {
+        pinMoneyJpaService.addIpInformation(SecurityContextHolder.getContext().getAuthentication().getName(), "/signUp");
+
         model.addAttribute("SignUpResponse", new SignUpResponse());
         return "account/signUp";
     }

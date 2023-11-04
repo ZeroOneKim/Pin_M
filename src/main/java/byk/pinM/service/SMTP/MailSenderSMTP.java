@@ -28,7 +28,7 @@ public class MailSenderSMTP {
 
     public void sendEmailRequestMoney(String nickname, int requestPoint, String phone, String accountNum, String bankNm) {
         SimpleMailMessage msg = new SimpleMailMessage();
-        System.out.println("Email 발송 : " + info.getNaverMailId());
+
         msg.setTo(info.getNaverMailId());
         msg.setSubject(info.getSmtpTitle());
         msg.setText("PinMoney 요청드림.\n" +

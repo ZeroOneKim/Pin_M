@@ -1,5 +1,6 @@
 package byk.pinM.controller.Account;
 
+import byk.pinM.service.JPA.PinMoneyJpaService;
 import byk.pinM.service.PinService.CrawlingWeatherService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,20 +18,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class SignInController {
     private static final Logger logger = LogManager.getLogger("클래스 : " + SignInController.class);
-
+    @Autowired private PinMoneyJpaService pinMoneyJpaService;
     @Autowired private AuthenticationManager authenticationManager;
     @Autowired private CrawlingWeatherService crawlingWeatherService;
+
     @GetMapping("/signIn")
     public String signIn(Model model) {
-        logger.info("\n try - SignIn 시도 \n");
-        System.out.println(crawlingWeatherService.tomo_AMPM_Temperature());
+        pinMoneyJpaService.addIpInformation(SecurityContextHolder.getContext().getAuthentication().getName(), "/signIn");
         return "account/signIn";
     }
 
     @PostMapping("/signIn-process")
     public String signInProcess(@RequestParam("user_id") String id, @RequestParam("password") String password) {
-
-
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(id, password);
 
         Authentication authentication = authenticationManager.authenticate(authToken);
