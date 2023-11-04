@@ -24,7 +24,7 @@ public class RegistAccountNumController {
             model.addAttribute("pinaccount", new PinAccount());
         }
         model.addAttribute("pinaccount", new PinAccount());
-        return "/content/registAccount";
+        return "content/registAccount";
     }
 
     @PostMapping("/content/registAccount-process")
