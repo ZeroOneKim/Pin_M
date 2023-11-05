@@ -2,6 +2,7 @@ package byk.pinM.controller.Account;
 
 import byk.pinM.service.JPA.PinMoneyJpaService;
 import byk.pinM.service.PinService.CrawlingWeatherService;
+import byk.pinM.service.PinService.MyUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class SignInController {
 
     @GetMapping("/signIn")
     public String signIn(Model model) {
+        logger.info(new MyUtil().getIpAddress() + " =====  Sign In 페이지 접근 중. . .");
         pinMoneyJpaService.addIpInformation(SecurityContextHolder.getContext().getAuthentication().getName(), "/signIn");
         return "account/signIn";
     }
@@ -38,7 +40,7 @@ public class SignInController {
         try {
             return "redirect:/content";
         } catch (Exception e) {
-            logger.info("\n ERROR] : SignIn 실패. \nReason : " + e);
+            logger.error("\n ERROR] : SignIn 실패. \nReason : " + e);
             return "account/signIn";
         }
 

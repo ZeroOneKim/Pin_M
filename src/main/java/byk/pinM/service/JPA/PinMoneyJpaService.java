@@ -22,6 +22,8 @@ import java.util.Optional;
  */
 @Service
 public class PinMoneyJpaService {
+
+
     @Autowired private PinAccountRepository pinAccountRepository;
     @Autowired private AccountRepository accountRepository;
     @Autowired private UserLogRepository userLogRepository;
@@ -62,8 +64,7 @@ public class PinMoneyJpaService {
         userLog.setAccess_dt(new MyUtil().getTimeNow());
         userLog.setPage_nm(pageNm);
 
-        if(!userLog.getIp_addr().equals(info.getNoLoggingIP())) userLogRepository.save(userLog);
-
+        if(!userLog.getIp_addr().equals(info.getNoLoggingIP()) || !userLog.getLog_id().equals(info.getLocalIp())) userLogRepository.save(userLog);
     }
 
     /**
