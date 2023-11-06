@@ -32,14 +32,14 @@ public class MyUtil {
 
     //현재시간을 리턴한다.
     public String getTimeNow() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd HHmmss");
         Date date = new Date();
         String now = simpleDateFormat.format(date);
 
         return now;
     }
     public String getTimeNow(String gbn, String gbn2) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy"+gbn+"MM"+gbn+"dd "+"hh"+gbn2+"mm"+gbn2+"ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy"+gbn+"MM"+gbn+"dd "+"HH"+gbn2+"mm"+gbn2+"ss");
         Date date = new Date();
         String now = simpleDateFormat.format(date);
 

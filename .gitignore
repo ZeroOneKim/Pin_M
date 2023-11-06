@@ -50,3 +50,4 @@ mySecurityInfo.java
 # More Setting File
 src/main/resources/application.properties
 log4j2.xml
+*.log
