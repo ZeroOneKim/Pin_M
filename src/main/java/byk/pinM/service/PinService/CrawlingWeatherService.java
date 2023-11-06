@@ -1,6 +1,5 @@
 package byk.pinM.service.PinService;
 
-import byk.pinM.controller.Account.SignInController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -36,7 +35,7 @@ public class CrawlingWeatherService {
 
     public List<Map<String, String>> tomorrow_weather() {
         String URL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=%EC%84%9C%EC%9A%B8%20%EB%82%A0%EC%94%A8";
-        List answer = new ArrayList<>();
+        List<Map<String, String>> answer = new ArrayList<>();
         try {
             Document doc = Jsoup.connect(URL).get();
             Elements tempElement = doc.select(".scroll_box._horizontal_scroll .graph_inner._hourly_weather .degree_point .num");
@@ -45,7 +44,7 @@ public class CrawlingWeatherService {
 
             boolean timeCnt = false;
             int forCnt = 26;
-            Map<String, String> map2 = new LinkedHashMap<>();
+
             for(int i = 0; i < forCnt; i++) {
                 if(timeCnt) {
                     Element timeData = timeElement.get(i);
@@ -69,7 +68,6 @@ public class CrawlingWeatherService {
                 }
             }
         } catch (Exception e) {
-            answer.add("ERR] 날짜 정보를 얻지 못했습니다.");
             logger.error(e);
         }
         return answer;
