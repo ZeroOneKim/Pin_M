@@ -44,6 +44,9 @@ public class JPQLService {
         return queryExe;
     }
 
-
+    public long simpleLongSelectTable(String query) {
+        long queryExe = entityManager.createQuery(query, Long.class).getSingleResult();
+        return queryExe;
+    }
 
 }
