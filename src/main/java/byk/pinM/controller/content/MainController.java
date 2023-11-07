@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -36,11 +37,25 @@ public class MainController {
     public String mainPage(Model model) {
         String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<PinPoint> pinPoint = pinPointRepository.findById(user_id);
+        try {
+            model.addAttribute("point", pinPoint.get().getPin_point());
+            model.addAttribute("task", mainContentService.getTimePinRecord());
+            model.addAttribute("spendPoint", mainContentService.entireSpendMoney(user_id));
+        } catch (Exception e) {
+            model.addAttribute("point", 0);
+            model.addAttribute("task", false);
+            model.addAttribute("spendPoint", 0);
+        }
 
         model.addAttribute("nickname", mainContentService.getUserNickname());
-        model.addAttribute("point", pinPoint.get().getPin_point());
-        model.addAttribute("spendPoint", mainContentService.entireSpendMoney(user_id));
 
         return "content/main";
+    }
+
+    @GetMapping("/logout")
+    public String logoutProcess(RedirectAttributes redirectAttributes) {
+        SecurityContextHolder.clearContext(); //로그인 정보 clear
+        redirectAttributes.addFlashAttribute("afterMessage", "로그아웃 되었습니다.");
+        return "redirect:/";
     }
 }
