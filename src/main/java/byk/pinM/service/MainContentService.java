@@ -105,4 +105,19 @@ public class MainContentService {
 
         return res;
     }
+
+    /**
+     * ID 창설 이래 전체 교환 금액을 리턴.
+     * @param user_id
+     * @return res : 총 교환 포인트
+     */
+    public int entireSpendMoney(String user_id) {
+        int res = 0;
+        String query = "SELECT sum(spend_point) from PinPointSpend where user_id = '" + user_id +"'";
+        res = (int) JPQLService.simpleLongSelectTable(query);
+
+        return res;
+    }
+
+
 }
