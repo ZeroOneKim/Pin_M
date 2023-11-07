@@ -25,7 +25,7 @@ public class MainController {
 
     @GetMapping("/")
     public String indexPage() {
-        logger.info("index Page Access");
+        logger.info(new MyUtil().getIpAddress() + "============ index Page Access");
         pinMoneyJpaService.addIpInformation(SecurityContextHolder.getContext().getAuthentication().getName(), "index");
 
 
@@ -34,10 +34,12 @@ public class MainController {
 
     @GetMapping("/content")
     public String mainPage(Model model) {
-        Optional<PinPoint> pinPoint = pinPointRepository.findById(SecurityContextHolder.getContext().getAuthentication().getName());
+        String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<PinPoint> pinPoint = pinPointRepository.findById(user_id);
 
         model.addAttribute("nickname", mainContentService.getUserNickname());
         model.addAttribute("point", pinPoint.get().getPin_point());
+        model.addAttribute("spendPoint", mainContentService.entireSpendMoney(user_id));
 
         return "content/main";
     }
