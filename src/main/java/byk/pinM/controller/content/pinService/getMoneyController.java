@@ -41,9 +41,16 @@ public class getMoneyController {
         Optional<PinPoint> pinPoint = pinPointRepository.findById(user_id);
 
         model.addAttribute("nickname", mainContentService.getUserNickname());
-        model.addAttribute("bankNm", pinAccount.get().getBank_nm());
-        model.addAttribute("accountNum", pinAccount.get().getAccountnum());
-        model.addAttribute("point", pinPoint.get().getPin_point());
+
+        try {
+            model.addAttribute("bankNm", pinAccount.get().getBank_nm());
+            model.addAttribute("accountNum", pinAccount.get().getAccountnum());
+            model.addAttribute("point", pinPoint.get().getPin_point());
+        } catch (Exception e) {
+            model.addAttribute("bankNm", "");
+            model.addAttribute("accountNum", "");
+            model.addAttribute("point", "");
+        }
 
         return "content/getMoney";
     }

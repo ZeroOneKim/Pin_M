@@ -32,8 +32,6 @@ public class WeatherController {
         model.addAttribute("PM", ampm_temperature.get(1));
         model.addAttribute("weatherData", tomorrowWeatherInfo);
 
-        mainContentService.getTimePinRecord();
-
         return "content/weather";
     }
     
@@ -47,7 +45,6 @@ public class WeatherController {
         } else {
             redirectAttributes.addFlashAttribute("Message", "오늘은 이미 적립하였습니다.");
         }
-
 
         return "redirect:/content/weather";
     }

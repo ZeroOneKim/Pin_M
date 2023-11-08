@@ -55,7 +55,6 @@ public class MainController {
     @GetMapping("/logout")
     public String logoutProcess(RedirectAttributes redirectAttributes) {
         SecurityContextHolder.clearContext(); //로그인 정보 clear
-        redirectAttributes.addFlashAttribute("afterMessage", "로그아웃 되었습니다.");
         return "redirect:/";
     }
 }
