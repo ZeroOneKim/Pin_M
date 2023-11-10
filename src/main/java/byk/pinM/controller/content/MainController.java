@@ -1,6 +1,5 @@
 package byk.pinM.controller.content;
 
-import byk.pinM.controller.Account.SignInController;
 import byk.pinM.entity.pinservice.PinPoint;
 import byk.pinM.repository.PinPointRepository;
 import byk.pinM.service.JPA.PinMoneyJpaService;
@@ -17,6 +16,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
+/**
+ * 많은 접근하는 기본 페이지 관련 클래스(Controller)
+ * 비사용자 접근가능 index Page/ 사용자 접근가능 content Page
+ * @Author : yikim
+ * @Date : 2023-11-10 최종 작성
+ */
 @Controller
 public class MainController {
     private static final Logger logger = LogManager.getLogger("-------------------- MainController Logging --------------------");
