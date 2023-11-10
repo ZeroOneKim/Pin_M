@@ -10,7 +10,12 @@ import org.jsoup.select.Elements;
 
 import java.util.*;
 
-
+/**
+ * 날씨 정보를 크롤링하여 Return하는 서비스 클래스
+ * @authror : yikim
+ * @Date : 2023-10-25 최초작성
+ *
+ */
 @Service
 public class CrawlingWeatherService {
     private static final Logger logger = LogManager.getLogger("클래스 : " + CrawlingWeatherService.class);
