@@ -15,11 +15,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
+/**
+ * 보안 관련 설정 클래스
+ * @author 김영일
+ * @Date : 2023-11-10 최종수정.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired private DataSource dataSource;
 
+    /**
+     * HTTP 보안 설정 메서드
+     * @param http : (builder)Spring HttpSecurity Object
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -38,6 +48,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     }
 
+    /**
+     * 로그인 관련 인증 처리 메서드 -> DB의 두 테이블을 직접 조인하여 처리하였음.
+     * @param auth : Security Builder형식 auth 객체
+     * @throws Exception
+     */
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
