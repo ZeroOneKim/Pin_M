@@ -20,6 +20,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
+/**
+ * Point -> 현금으로 변환하는 클래스(Controller)
+ * @author : 김영일
+ * @Date : 2023-10-17 최초작성
+ *       : 2023-11-08 새 가입자 로그인 불가현상 수정
+ */
 @Controller
 public class getMoneyController {
     @Autowired private MainContentService mainContentService;
@@ -29,19 +35,20 @@ public class getMoneyController {
     @Autowired private PinMoneyJpaService pinMoneyJpaService;
     @Autowired private MailSenderSMTP mailSenderSMTP;
 
-
-
+    /**
+     * 포인트 전환 Page View Method
+     * @param model [닉네임/ 은행명/ 계좌번호/ point]
+     * @return URL
+     */
     @GetMapping("/content/getMoney")
     public String getMoneyPage(Model model) {
         pinMoneyJpaService.addIpInformation(SecurityContextHolder.getContext().getAuthentication().getName(), "/getMoney");
-
         String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Optional<PinAccount> pinAccount = accountNumRepository.findById(user_id);
         Optional<PinPoint> pinPoint = pinPointRepository.findById(user_id);
 
         model.addAttribute("nickname", mainContentService.getUserNickname());
-
         try {
             model.addAttribute("bankNm", pinAccount.get().getBank_nm());
             model.addAttribute("accountNum", pinAccount.get().getAccountnum());
@@ -51,10 +58,18 @@ public class getMoneyController {
             model.addAttribute("accountNum", "");
             model.addAttribute("point", "");
         }
-
         return "content/getMoney";
     }
 
+    /**
+     * Point -> 현금 교환 요청 메서드
+     * 1. 값 검증
+     * 2. 포인트 차감
+     * 3. 기록 DB 저장
+     * @param pt : 요청 금액
+     * @param redirectAttributes : redirect content
+     * @return RedirectURL
+     */
     @PostMapping("/getmoney-process")
     public String getMoneyProcess(@RequestParam("pointCh") String pt, RedirectAttributes redirectAttributes) {
         String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
