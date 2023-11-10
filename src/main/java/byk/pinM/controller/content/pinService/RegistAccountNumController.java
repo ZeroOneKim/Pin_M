@@ -11,6 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+/**
+ * 계좌 등록 관련 클래스(Controller)
+ * @Author : yikim
+ * @Date : 2023-11-10 최종작성
+ */
 @Controller
 public class RegistAccountNumController {
     @Autowired private PinAccountRepository pinAccountRepository;

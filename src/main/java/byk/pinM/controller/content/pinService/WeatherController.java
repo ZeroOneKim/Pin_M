@@ -15,6 +15,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 날씨 정보 관련 클래스(Controller)
+ * @Author : yikim
+ * @Date : 2023-11-10 최종작성
+ */
 @Controller
 public class WeatherController {
     @Autowired private CrawlingWeatherService crawlingWeatherService;
@@ -23,6 +28,11 @@ public class WeatherController {
     @Autowired private PinPointRecordRepository pinPointRecordRepository;
     @Autowired private PinPointRepository pinPointRepository;
 
+    /**
+     * 날씨정보를 화면에 보여주는 메서드
+     * @param model {nickname : 닉네임, AM : 오전 날씨, PM : 오후 날씨, weatherData : 전체 날씨/강수}
+     * @return : URL
+     */
     @GetMapping("/content/weather")
     public String weatherView(Model model) {
         List<String> ampm_temperature = crawlingWeatherService.tomo_AMPM_Temperature();
@@ -34,13 +44,17 @@ public class WeatherController {
 
         return "content/weather";
     }
-    
+
+    /**
+     * 날씨 정보를 확인하고 적립하는 메서드
+     * @return : RedirectURL
+     */
     @PostMapping("/check-weather")
     public String weatherCheck(RedirectAttributes redirectAttributes) {
         Boolean todayChk = mainContentService.getTimePinRecord();
 
         if(!todayChk) {
-            mainContentService.WeatherChkSuccess(1); //적립 처리
+            mainContentService.WeatherChkSuccess(1);
             redirectAttributes.addFlashAttribute("Message", "적립되었습니다.");
         } else {
             redirectAttributes.addFlashAttribute("Message", "오늘은 이미 적립하였습니다.");
