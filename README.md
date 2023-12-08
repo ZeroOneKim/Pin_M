@@ -7,20 +7,29 @@ PinMoney는 세 달 동안의 퇴근 후의 개발을 통해 완성된 용돈 �
 개인적인 필요로 시작된 이 프로젝트는 현저히 부족한 개인 재능을 기반으로 서비스를 제공합니다.
 
 ## 개발 배경
-부모님에게 용돈을 지급하는데에 있어서, 남들과 다르게 드려보고자 하는 생각이 들었숩니다.<br>
+부모님에게 용돈을 지급하는데에 있어서, 남들과 다르게 드려보고자 하는 생각이 들었다.<br>
 용돈을 지급하는데에 단순한 과정을 넘어 개발자로서 더 의미있게 주는 것에 대한 열망에서 비롯 되었습니다.<br><br>
 E-mail : wowwow0124@naver.com <br>
 이메일 연락 시 URL 공유 가능합니다. 서비스 페이지는 접근 하는것만으로 IP를 수집합니다.
 
 
 ## Stacks
-- **Front**:
-- **BackEnd**: 
-- **Server** :  
-- **Database**: 
+- **Front**
+  - BootStrap
+  - JS
+  - TemplateEngine : ThymeLeaf
+- **BackEnd**
+  - SpringBoot 2.7
+    - SpringSecurity 5
+    - Spring JPA(DB)
+    - Spring Mail 등.
+- **Server**
+  - AWS EC2(Ubuntu)
+- **Database**
+  - MySql
 
-## 기여하기
-많이 부족한 코드입니다. 어떤 형태의 기여든 연락주시면 커피 기프티콘을 선물하겠습니다.<br>
+## Contribute
+많이 부족한 코드입니다. 어떤 형태의 기여든 도움이 되는 경우, 커피 기프티콘을 지급합니다.<br>
 버그, 기능 제안, 코드 기여 등 모든 종류의 기여를 기다리겠습니다.
 
 ---
